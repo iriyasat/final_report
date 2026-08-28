@@ -104,32 +104,29 @@ The system architecture centers around a star-schema analytical model supported 
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
-    class/.style={rectangle, draw=blue!70!black, fill=blue!4, thick, minimum width=3.4cm, font=\scriptsize, inner sep=5pt, rounded corners=3pt, align=left},
-    fact_class/.style={rectangle, draw=violet!70!black, fill=violet!6, very thick, minimum width=3.8cm, font=\scriptsize, inner sep=5pt, rounded corners=3pt, align=left},
+    class/.style={rectangle, draw=blue!70!black, fill=blue!4, thick, text width=3.4cm, font=\scriptsize, inner sep=5pt, rounded corners=3pt, align=left},
+    fact_class/.style={rectangle, draw=violet!70!black, fill=violet!6, very thick, text width=3.8cm, font=\scriptsize, inner sep=5pt, rounded corners=3pt, align=left},
     rel/.style={draw=gray!70!black, thick, -latex},
     lbl/.style={font=\tiny, fill=white, inner sep=1pt}
 ]
 
-% ---- Header macro for consistent title formatting ----
-\newcommand{\entityhead}[1]{\centering\textbf{#1}\\[1pt]\hrulefill\\[2pt]}
-
 % Nodes
 \node [class] (store) {
-    \entityhead{Store}
+    \centerline{\textbf{Store}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ store\_id [PK]} \\
     + store\_name : varchar \\
     + city\_id : FK \\
     + contact\_phone : varchar
 };
 \node [class] (emp) [right=1.8cm of store] {
-    \entityhead{Employee}
+    \centerline{\textbf{Employee}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ employee\_id [PK]} \\
     + role\_id : FK \\
     + store\_id : FK \\
     + status\_id : FK
 };
 \node [fact_class] (sale) [below=1.8cm of store, xshift=2.2cm] {
-    \entityhead{SellingInfo (Fact)}
+    \centerline{\textbf{SellingInfo (Fact)}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ selling\_info\_id [PK]} \\
     + vehicle\_id : FK \\
     + customer\_id : FK \\
@@ -139,7 +136,7 @@ The system architecture centers around a star-schema analytical model supported 
     + sale\_date : date
 };
 \node [class] (veh) [left=1.8cm of sale] {
-    \entityhead{Vehicle}
+    \centerline{\textbf{Vehicle}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ vehicle\_id [PK]} \\
     + make : varchar \\
     + model : varchar \\
@@ -148,7 +145,7 @@ The system architecture centers around a star-schema analytical model supported 
     + status : integer
 };
 \node [class] (cust) [right=1.8cm of sale] {
-    \entityhead{Customer}
+    \centerline{\textbf{Customer}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ customer\_id [PK]} \\
     + customer\_name : varchar \\
     + email : varchar \\
@@ -156,7 +153,7 @@ The system architecture centers around a star-schema analytical model supported 
     + city\_id : FK
 };
 \node [class] (inv) [below=1.8cm of sale] {
-    \entityhead{Invoice}
+    \centerline{\textbf{Invoice}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ invoice\_id [PK]} \\
     + selling\_id : FK \\
     + invoice\_date : date \\
@@ -164,14 +161,14 @@ The system architecture centers around a star-schema analytical model supported 
     + total\_amount : integer
 };
 \node [class] (order) [below=1.8cm of cust] {
-    \entityhead{Order (E-Commerce)}
+    \centerline{\textbf{Order (E-Commerce)}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ order\_id [PK]} \\
     + customer\_id : FK \\
     + total\_amount : integer \\
     + order\_status : varchar
 };
 \node [class] (msg) [above=1.8cm of cust] {
-    \entityhead{CustomerMessage}
+    \centerline{\textbf{CustomerMessage}}\vspace{1pt}\hrule\vspace{2pt}
     \textbf{+ message\_id [PK]} \\
     + customer\_id : FK \\
     + store\_id : FK \\

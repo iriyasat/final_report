@@ -6,7 +6,7 @@ Following system implementation and data seeding, I conducted empirical performa
 \section{System Performance \& Query Benchmarks}
 To ensure that complex analytical dashboards render smoothly without degrading server response times, I evaluated query execution latency across three primary database access patterns:
 \begin{enumerate}
-    \item Standard Django ORM QuerySets (using default \texttt{select\_related} and \texttt{prefetch\_related} helpers).
+    \item Standard Django ORM QuerySets (using \texttt{select\_related} and \texttt{prefetch\_related}).
     \item Optimized Django ORM Aggregations (using \texttt{annotate()} and \texttt{aggregate()}).
     \item Raw Star-Schema SQL Queries (leveraging targeted database indexing).
 \end{enumerate}

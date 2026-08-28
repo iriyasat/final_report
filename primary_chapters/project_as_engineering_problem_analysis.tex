@@ -1,0 +1,39 @@
+\chapter{Project as Engineering Problem Analysis}
+
+\section{Sustainability of the Project/Work}
+Engineering sustainable enterprise software requires designing architectures that remain maintainable, scalable, and resource-efficient over long operational lifecycles. I addressed sustainability across three primary dimensions:
+
+\begin{enumerate}
+    \item \textbf{Technical Sustainability \& Modularity:} The software architecture separates back-office dealership operations (\texttt{car\_sales}) from customer-facing web commerce (\texttt{ecommerce}). By organizing functionality into independent Django applications with distinct models, views, and templates, future developers can introduce new features without modifying core legacy database logic. Furthermore, adopting standard ORM patterns and PEP-8 compliant code ensures long-term maintainability.
+    \item \textbf{Economic Sustainability:} Building the entire application stack using open-source, community-supported technologies (Python, Django, PostgreSQL, Bootstrap) eliminates recurring proprietary software license fees. The application can run on lightweight VPS hosting instances, minimizing operational server infrastructure costs.
+    \item \textbf{Environmental Sustainability:} Modernizing dealership management from physical paper-based ledgers to a fully digital platform drastically reduces paper, ink, and physical storage consumption.
+\end{enumerate}
+
+\section{Social and Environmental Effects and Analysis}
+
+\subsection{Societal Impact \& User Empowerment}
+The implementation of the dual-app automotive platform produces several positive social effects for both dealership staff and retail automotive customers:
+\begin{itemize}
+    \item \textbf{Transparency for Customers:} Customers gain instant, transparent access to vehicle specifications, inventory availability, pricing, and historical comparisons without needing to visit physical showrooms.
+    \item \textbf{Workplace Productivity:} Sales representatives and store managers benefit from streamlined workflows that eliminate repetitive manual documentation. Automated invoice calculation and message routing allow staff to focus on customer service rather than administrative overhead.
+    \item \textbf{Equitable Access:} Responsive web interfaces ensure that customers accessing the platform from low-cost mobile devices receive the same functional experience as desktop users.
+\end{itemize}
+
+\subsection{Environmental Resource Reduction}
+By replacing physical paper invoices, printed vehicle brochures, and paper inquiry logs with digital PDF invoices, interactive online catalogs, and real-time messaging, the platform prevents substantial paper waste over annual operation cycles. Assuming a medium-sized dealership group processes 5,000 sales transactions and 25,000 customer inquiries annually, digitizing operations saves approximately 60,000 physical sheets of paper per year.
+
+\section{Addressing Ethics and Ethical Issues}
+
+\subsection{Data Privacy \& Protection of Personal Information}
+Handling customer records, contact numbers, home addresses, and financial purchase histories introduces significant ethical responsibilities regarding data privacy. I implemented strict data protection measures throughout the software lifecycle:
+\begin{itemize}
+    \item \textbf{Access Scoping:} Customer records are accessible only to authenticated store employees assigned to that specific store location. Unauthenticated public API endpoints strip out personal contact information, exposing only aggregate sales metrics.
+    \item \textbf{Password Security:} User authentication uses Django's implementation of PBKDF2 with a SHA-256 hash digest, ensuring that user passwords are never stored in plaintext format.
+\end{itemize}
+
+\subsection{Algorithmic Fairness \& Transparent Invoicing}
+Ethical software design requires preventing unauthorized manipulation of transaction records, prices, or discount figures. To enforce financial integrity:
+\begin{itemize}
+    \item \textbf{Immutable Sales Records:} Once a sale entry (\texttt{SellingInfo}) and invoice (\texttt{Invoice}) are finalized and saved, key financial fields (such as base price and vehicle VIN) are locked against retroactive tampering.
+    \item \textbf{Audit Trail Logging:} System timestamps (\texttt{created\_at}, \texttt{updated\_at}) are automatically managed by Django ORM fields (\texttt{auto\_now\_add}, \texttt{auto\_now}), providing immutable audit trails for auditing financial integrity.
+\end{itemize}

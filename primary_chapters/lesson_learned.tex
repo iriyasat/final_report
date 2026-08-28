@@ -1,0 +1,41 @@
+\chapter{Lesson Learned}
+
+\section{Problems Faced During this Period}
+Throughout the 3-month internship at Radiant Pharmaceuticals Limited, designing, developing, and deploying a dual-application automotive management system presented several significant engineering challenges:
+
+\begin{enumerate}
+    \item \textbf{Complex Relational Star-Schema Aggregation in Django ORM:}
+    Building multi-dimensional analytical dashboards (such as store sales breakdowns, budget vs.\ actual comparisons, and employee performance rankings) using standard Django ORM \texttt{annotate()} methods resulted in complex, inefficient SQL query generation. In several instances, ORM query building produced Cartesian join products across foreign keys, causing page load delays exceeding 1.5 seconds.
+
+    \item \textbf{Relational Integrity \& Cross-App Model Dependencies:}
+    Integrating two distinct functional applications (\texttt{car\_sales} ERP and \texttt{ecommerce} Storefront) within a shared database schema created risks of circular import dependencies and cascading data integrity errors. For instance, connecting e-commerce customer orders directly to ERP inventory models required careful lifecycle management so that online carts would not lock inventory prematurely.
+
+    \item \textbf{Concurrency \& Atomic Transaction Handling During Checkout:}
+    Simultaneous order submissions by online customers introduced potential race conditions where multiple buyers could attempt to purchase or reserve the last remaining vehicle stock item simultaneously.
+
+    \item \textbf{Managing Complex Multi-Level Employee Supervisor Hierarchies:}
+    Representing deep organizational trees (where sales representatives report through up to eight levels of supervisory management) in a relational structure made querying supervisor roles and chain-of-command permissions computationally intensive.
+
+    \item \textbf{Static \& Media Asset Delivery for High-Resolution Vehicle Media:}
+    Handling high-resolution vehicle photographs and brand logos across responsive vehicle detail pages caused initial layout shifting and slow initial page loads on slower networks.
+\end{enumerate}
+
+\section{Solution of those Problems}
+To resolve these engineering obstacles and deliver a robust production-ready platform, I implemented the following targeted technical solutions:
+
+\begin{enumerate}
+    \item \textbf{Implementation of Raw SQL Star-Schema Views:}
+    To overcome ORM aggregation bottlenecks, I wrote optimized, hand-crafted raw SQL queries inside custom Django model manager methods. By utilizing indexed \texttt{GROUP BY} and \texttt{LEFT JOIN} operations directly against PostgreSQL/SQLite tables, query execution latency dropped from 150.8 ms down to 12.0 ms, delivering instantaneous dashboard rendering.
+
+    \item \textbf{Decoupled App Architecture \& Loose Coupling:}
+    I enforced strict separation of concerns between \texttt{car\_sales} and \texttt{ecommerce}. E-commerce models (\texttt{Cart}, \texttt{Order}) reference ERP dimension tables (\texttt{Vehicle}, \texttt{Customer}) via foreign key constraints, while business logic operations (such as converting an online order into a finalized ERP invoice) are encapsulated in dedicated service functions.
+
+    \item \textbf{Atomic Database Transactions (\texttt{transaction.atomic}):}
+    To guarantee race-condition prevention during checkout and sale processing, I wrapped inventory deduction, cart clearing, order creation, and invoice generation inside Django's \texttt{@transaction.atomic} decorator block. If any step fails, the entire transaction is rolled back, preserving database consistency.
+
+    \item \textbf{Structured Hierarchy Mapping Table:}
+    Instead of performing recursive SQL joins to determine employee chains of command, I implemented a dedicated \texttt{Employee}\allowbreak\texttt{Hierarchy} model storing direct foreign key links to supervisor roles (\texttt{supervisor}, \texttt{supervisor2}, \dots, \texttt{supervisor8}). This enabled constant-time $O(1)$ lookup for any employee's management chain.
+
+    \item \textbf{Asset Optimization \& Lazy Loading:}
+    I optimized vehicle media handling by compressing images into WebP/JPEG formats, implementing responsive CSS image containers, and applying native browser \texttt{loading="lazy"} attributes to non-critical catalog images, reducing total payload sizes by over 60\%.
+\end{enumerate}

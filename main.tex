@@ -1,0 +1,111 @@
+% Prepared by Md. Asif Bin Khaled, Lecturer, SETS, IUB
+\documentclass[a4paper, 12pt]{report}
+\usepackage[a4paper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{tcolorbox}
+\usepackage[table]{xcolor}
+\definecolor{indigo}{RGB}{63, 81, 181}
+\definecolor{ganttblue}{HTML}{2E75B6}
+\definecolor{ganttcoral}{HTML}{F28C8C}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{pgfgantt} 
+%changing the image path
+\graphicspath{ {images/} }
+%package for referencing
+\usepackage{hyperref}
+%stopping re-positioning of tables
+\usepackage{float}
+%indenting the starting paragraph of each section
+\usepackage{indentfirst}
+%matrix
+\usepackage{amsmath}
+%page numbering
+\usepackage[utf8]{inputenc}
+%header and footer
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-3pt}
+%last page
+\usepackage{lastpage}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+%keywords
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{Keywords---}} #1
+}
+
+%beginning of the document
+\begin{document}
+
+%roman page numbering
+\pagenumbering{roman}
+
+%header and footer for front matter
+\pagestyle{fancy}
+\rhead{} % Remove right header content
+\cfoot{\thepage}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \rhead{}%
+  \cfoot{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+%Initial Inputs
+\input{entry_chapters/titlepage}
+\input{entry_chapters/attestation}
+\addcontentsline{toc}{chapter}{\numberline{}Attestation}
+\input{entry_chapters/acknowledgement}
+\addcontentsline{toc}{chapter}{\numberline{}Acknowledgement}
+\input{entry_chapters/letter_of_transmittal}
+\addcontentsline{toc}{chapter}{\numberline{}Letter of Transmittal}
+\input{entry_chapters/evaluation_committee}
+\addcontentsline{toc}{chapter}{\numberline{}Evaluation Committee}
+\input{entry_chapters/abstract.tex}
+\addcontentsline{toc}{chapter}{\numberline{}Abstract}
+
+%Contents, Figures \& Tables
+\tableofcontents
+\listoffigures
+\listoftables
+
+%ending the current page
+\clearpage
+
+%Main Contents
+%arabic page numbering
+\pagenumbering{arabic}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \rhead{}%
+  \cfoot{Page \thepage\ of \pageref{LastPage}}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+\input{primary_chapters/introduction}
+\input{primary_chapters/literature_review}
+\input{primary_chapters/project_management_and_financing}
+\input{primary_chapters/methodology}
+\input{primary_chapters/body_of_the_project}
+\input{primary_chapters/results_and_analysis}
+\input{primary_chapters/project_as_engineering_problem_analysis}
+\input{primary_chapters/lesson_learned}
+\input{primary_chapters/future_work_and_conclusion}
+
+% bibliography
+\bibliographystyle{ieeetr}
+\bibliography{bibtex}
+\addcontentsline{toc}{chapter}{\numberline{}Bibliography}
+
+\input{primary_chapters/consent_form}
+
+\end{document}

@@ -1,0 +1,28 @@
+\chapter{Literature Review}
+
+\section{Relationship with Undergraduate Studies}
+
+This internship project directly applied core theoretical and practical principles from my undergraduate Computer Science \& Engineering curriculum at Independent University, Bangladesh (IUB). The engineering tasks performed during the 3-month placement at Radiant Pharmaceuticals Limited mapped to key course domains:
+
+\begin{itemize}
+    \item \textbf{Database Management Systems (CSC303):} Designing relational star-schema tables, enforcing foreign key integrity, creating composite indexes, and writing optimized SQL aggregation queries.
+    \item \textbf{Object-Oriented Programming (CSC203):} Structuring Django models, custom authentication backends, and view controllers using clean Python object-oriented patterns.
+    \item \textbf{Web Engineering (CSC343):} Developing REST API endpoints, implementing HTML5/Bootstrap 5 responsive interfaces, and managing client-server HTTP request-response cycles.
+    \item \textbf{Software Engineering (CSC305):} Applying Work Breakdown Structures (WBS), Gantt chart scheduling, requirement analysis, automated unit testing, and software maintainability practices.
+\end{itemize}
+
+\section{Related Works}
+
+Academic and industry literature highlights various strategies for enterprise software development and e-commerce platform architecture:
+
+\subsection{Enterprise Web Frameworks and Architecture}
+Pressman and Maxim~\cite{pressman2014software} emphasize that modern enterprise web applications require clear separation of concerns across presentation, business logic, and data layers. The authors argue that framework-based engineering reduces defect rates compared to ad-hoc custom scripts. Melé~\cite{django_by_example} demonstrates that Django's Model-View-Template (MVT) architecture provides built-in ORM security against SQL injection, cross-site scripting (XSS), and cross-site request forgery (CSRF).
+
+\subsection{Role-Based Access Control in Enterprise Systems}
+Sandhu et al.~\cite{sandhu1996role} established foundational models for Role-Based Access Control (RBAC), demonstrating that assigning permissions to roles rather than individual users drastically simplifies security administration in large organizations. My implementation of a 9-tier hierarchy aligns with Sandhu's RBAC model, ensuring fine-grained access control across store managers, sales reps, and corporate executives.
+
+\subsection{Relational Database Performance vs.\ ORM Overhead}
+Vicente et al.~\cite{vicente2021rdbms} evaluated database performance in web applications, finding that while Object-Relational Mapping (ORM) tools simplify basic CRUD operations, complex analytical aggregations over large datasets suffer significant latency due to object hydration overhead. Bypassing the ORM using raw SQL query execution reduces memory consumption and query latency, a strategy I implemented for executive analytical dashboards.
+
+\subsection{E-Commerce Usability and Recommendation Bottlenecks}
+Ullah et al.~\cite{ullah2016developing} highlighted the importance of responsive catalog filtering and secure authentication in web commerce platforms. Abdullah et al.~\cite{abdullah2021evaluating} evaluated developer usability across major e-commerce platforms, noting that off-the-shelf CMS solutions often introduce performance overhead. Savadatti and Krishna~\cite{savadatti2024implementation} analyzed recommendation algorithms, noting that collaborative filtering engines introduce cold-start latency for new catalog items. To avoid cold-start delays, I implemented an indexed database search filter engine delivering instant catalog filtering.

@@ -1,7 +1,7 @@
 \chapter{Body of the Project}
 
 \section{Work Description}
-During my 3-month undergraduate internship at \textbf{Radiant Pharmaceuticals Limited} (ICT Wing, MIS) from May 17, 2026, to August 16, 2026, under the industry supervision of Mr.~Ayan Chowdhury (Senior Officer, ICT) and academic supervision of Mr.~Azwad Abid (Lecturer, Department of CSE, IUB), I engineered an enterprise-grade automotive management system. The primary goal of this project was to modernize legacy dealership operations and provide a seamless digital purchasing experience for retail automotive customers.
+This project was developed during a 3-month undergraduate internship at \textbf{Radiant Pharmaceuticals Limited} (ICT Wing, MIS) from May 17, 2026, to August 16, 2026, under the industry supervision of Mr.~Ayan Chowdhury (Senior Officer, ICT) and academic supervision of Mr.~Azwad Abid (Lecturer, Department of CSE, IUB). The primary objective of the work was to modernize legacy dealership operations and provide a seamless digital purchasing experience for retail automotive customers.
 
 The software architecture consists of two tightly integrated applications within a unified Django framework:
 \begin{enumerate}
@@ -9,13 +9,13 @@ The software architecture consists of two tightly integrated applications within
     \item \textbf{Customer Web Storefront (\texttt{ecommerce}):} A customer-facing digital showroom allowing buyers to browse vehicles by make, model, category, and price, compare specifications side-by-side, schedule test drives, save items to a wishlist, manage shopping carts, submit orders, and communicate directly with dealership staff via message threads.
 \end{enumerate}
 
-My core responsibilities involved designing the relational database schema, implementing business logic, building raw SQL star-schema reporting views, configuring role-based authentication, developing RESTful APIs, and crafting responsive frontend user interfaces.
+The scope of engineering work encompasses relational database schema design, business logic implementation, raw SQL star-schema reporting engine construction, role-based access control configuration, RESTful API development, and responsive frontend interface design.
 
 \clearpage
 \section{Requirement Analysis}
 
 \subsection{Rich Picture Analysis}
-The operational landscape of an automotive dealership involves multiple interacting entities, including retail customers, sales executives, store managers, inventory controllers, and corporate executives. To analyze system requirements using Soft Systems Methodology (SSM), I evaluated both the \textbf{As-Is (Legacy)} operational environment and the \textbf{To-Be (Proposed)} integrated platform environment.
+The operational landscape of an automotive dealership involves multiple interacting entities, including retail customers, sales executives, store managers, inventory controllers, and corporate executives. To analyze system requirements using Soft Systems Methodology (SSM), both the \textbf{As-Is (Legacy)} operational environment and the \textbf{To-Be (Proposed)} integrated platform environment were evaluated.
 
 \subsubsection{As-Is Rich Picture (Legacy Operational System)}
 Figure~\ref{fig:rich_picture_as_is} illustrates the legacy operational structure. Physical paper ledgers, fragmented Excel spreadsheets, and isolated store databases caused severe communication bottlenecks, inventory discrepancies, delayed customer inquiry turnaround (up to 24 hours), and lack of central executive visibility.
@@ -63,7 +63,7 @@ Figure~\ref{fig:rich_picture_to_be} illustrates the proposed dual-application sy
 \section{System Analysis}
 
 \subsection{Six Element Analysis}
-To evaluate the system holistically, I conducted a Six-Element Systems Analysis:
+To evaluate the system holistically, a Six-Element Systems Analysis was conducted:
 \begin{enumerate}
     \item \textbf{People:} System administrators, store managers, sales representatives, finance officers, and retail customers.
     \item \textbf{Hardware:} Server hosting infrastructure (Linux x86\_64 VPS nodes), workstation client machines, and mobile user devices.
@@ -245,7 +245,7 @@ class SellingInfo(models.Model):
 \end{tcolorbox}
 
 \subsection{Analytical Star Schema SQL Queries}
-To deliver high-performance reporting dashboards without performance degradation, I implemented raw SQL aggregation queries leveraging database indexing. Below is an example raw SQL query executed within custom Django manager methods to aggregate store-wise sales performance:
+To deliver high-performance reporting dashboards without latency degradation, the platform implements raw SQL aggregation queries leveraging database indexing. Below is an example raw SQL query executed within custom Django manager methods to aggregate store-wise sales performance:
 
 \begin{tcolorbox}[colback=gray!5,colframe=gray!40,arc=2pt,boxrule=0.5pt]
 \small
@@ -264,7 +264,7 @@ ORDER BY total_revenue DESC;
 \end{tcolorbox}
 
 \subsection{REST API Endpoint Integration}
-I developed five specialized REST API endpoints using Django REST Framework to expose analytical metrics to dynamic frontend charting components:
+Five specialized REST API endpoints were developed using Django REST Framework to expose analytical metrics to dynamic frontend charting components:
 \begin{enumerate}
     \item \texttt{/api/store-sales/}: Returns vehicle sales and revenue aggregated by store.
     \item \texttt{/api/employee-sales/}: Returns total vehicle sales and commissions earned per rep.

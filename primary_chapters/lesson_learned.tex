@@ -1,7 +1,7 @@
 \chapter{Lesson Learned}
 
 \section{Problems Faced During this Period}
-Throughout the 3-month internship at Radiant Pharmaceuticals Limited, designing, developing, and deploying a dual-application automotive management system presented several significant engineering challenges:
+Throughout the 3-month placement at Radiant Pharmaceuticals Limited, designing, developing, and deploying a dual-application automotive management system presented several significant engineering challenges:
 
 \begin{enumerate}
     \item \textbf{Complex Relational Star-Schema Aggregation in Django ORM:}
@@ -21,21 +21,21 @@ Throughout the 3-month internship at Radiant Pharmaceuticals Limited, designing,
 \end{enumerate}
 
 \section{Solution of those Problems}
-To resolve these engineering obstacles and deliver a robust production-ready platform, I implemented the following targeted technical solutions:
+To resolve these engineering obstacles and deliver a robust production-ready platform, the following targeted technical solutions were implemented:
 
 \begin{enumerate}
     \item \textbf{Implementation of Raw SQL Star-Schema Views:}
-    To overcome ORM aggregation bottlenecks, I wrote optimized, hand-crafted raw SQL queries inside custom Django model manager methods. By utilizing indexed \texttt{GROUP BY} and \texttt{LEFT JOIN} operations directly against PostgreSQL/SQLite tables, query execution latency dropped from 150.8 ms down to 12.0 ms, delivering instantaneous dashboard rendering.
+    To overcome ORM aggregation bottlenecks, optimized raw SQL queries were implemented inside custom Django model manager methods. By utilizing indexed \texttt{GROUP BY} and \texttt{LEFT JOIN} operations directly against PostgreSQL/SQLite tables, query execution latency dropped from 150.8 ms down to 12.0 ms, delivering instantaneous dashboard rendering.
 
     \item \textbf{Decoupled App Architecture \& Loose Coupling:}
-    I enforced strict separation of concerns between \texttt{car\_sales} and \texttt{ecommerce}. E-commerce models (\texttt{Cart}, \texttt{Order}) reference ERP dimension tables (\texttt{Vehicle}, \texttt{Customer}) via foreign key constraints, while business logic operations (such as converting an online order into a finalized ERP invoice) are encapsulated in dedicated service functions.
+    Strict separation of concerns is enforced between \texttt{car\_sales} and \texttt{ecommerce}. E-commerce models (\texttt{Cart}, \texttt{Order}) reference ERP dimension tables (\texttt{Vehicle}, \texttt{Customer}) via foreign key constraints, while business logic operations (such as converting an online order into a finalized ERP invoice) are encapsulated in dedicated service functions.
 
     \item \textbf{Atomic Database Transactions (\texttt{transaction.atomic}):}
-    To guarantee race-condition prevention during checkout and sale processing, I wrapped inventory deduction, cart clearing, order creation, and invoice generation inside Django's \texttt{@transaction.atomic} decorator block. If any step fails, the entire transaction is rolled back, preserving database consistency.
+    To guarantee race-condition prevention during checkout and sale processing, inventory deduction, cart clearing, order creation, and invoice generation are wrapped inside Django's \texttt{transaction.atomic()} block. If any step fails, the entire transaction is rolled back, preserving database consistency.
 
     \item \textbf{Structured Hierarchy Mapping Table:}
-    Instead of performing recursive SQL joins to determine employee chains of command, I implemented a dedicated \texttt{Employee}\allowbreak\texttt{Hierarchy} model storing direct foreign key links to supervisor roles (\texttt{supervisor}, \texttt{supervisor2}, \dots, \texttt{supervisor8}). This enabled constant-time $O(1)$ lookup for any employee's management chain.
+    Instead of performing recursive SQL joins to determine employee chains of command, a dedicated \texttt{Employee}\allowbreak\texttt{Hierarchy} model was implemented storing direct foreign key links to supervisor roles (\texttt{supervisor}, \texttt{supervisor2}, \dots, \texttt{supervisor8}). This enabled constant-time $O(1)$ lookup for any employee's management chain.
 
     \item \textbf{Asset Optimization \& Lazy Loading:}
-    I optimized vehicle media handling by compressing images into WebP/JPEG formats, implementing responsive CSS image containers, and applying native browser \texttt{loading="lazy"} attributes to non-critical catalog images, reducing total payload sizes by over 60\%.
+    Vehicle media delivery was optimized by compressing images into WebP/JPEG formats, implementing responsive CSS image containers, and applying native browser \texttt{loading="lazy"} attributes to non-critical catalog images, reducing total payload sizes by over 60\%.
 \end{enumerate}

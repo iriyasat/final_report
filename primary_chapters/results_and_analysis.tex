@@ -1,10 +1,10 @@
 \chapter{Results \& Analysis}
 
 \section{Overview of Analytical Results}
-Following system implementation and data seeding, I conducted empirical performance benchmarking and analytical data evaluation across both the back-office ERP engine (\texttt{car\_sales}) and the front-office web application (\texttt{ecommerce}). The primary objectives were to validate query execution speeds under multi-table relational joins, verify analytical accuracy across star-schema reporting views, measure user interface responsiveness, and assess operational efficacy.
+Following system implementation and data seeding, empirical performance benchmarking and analytical data evaluation were conducted across both the back-office ERP engine (\texttt{car\_sales}) and the front-office web application (\texttt{ecommerce}). The primary objectives were to validate query execution speeds under multi-table relational joins, verify analytical accuracy across star-schema reporting views, measure user interface responsiveness, and assess operational efficacy.
 
 \section{System Performance \& Query Benchmarks}
-To ensure that complex analytical dashboards render smoothly without degrading server response times, I evaluated query execution latency across three primary database access patterns:
+To ensure that complex analytical dashboards render smoothly without degrading server response times, query execution latency was evaluated across three primary database access patterns:
 \begin{enumerate}
     \item Standard Django ORM QuerySets (using \texttt{select\_related} and \texttt{prefetch\_related}).
     \item Optimized Django ORM Aggregations (using \texttt{annotate()} and \texttt{aggregate()}).
@@ -88,7 +88,7 @@ The integration of the customer-facing \texttt{ecommerce} storefront directly wi
 \end{itemize}
 
 \section{Security \& RBAC Validation}
-To verify that unauthorized users cannot view or modify restricted enterprise data, I conducted security role-access auditing across four user tiers. Table~\ref{tab:rbac_matrix} shows the access validation matrix verified during system testing.
+To verify that unauthorized users cannot view or modify restricted enterprise data, a security role-access audit was conducted across four user tiers. Table~\ref{tab:rbac_matrix} shows the access validation matrix verified during system testing.
 
 \begin{table}[H]
 \centering

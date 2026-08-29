@@ -1,7 +1,7 @@
 \chapter{Project as Engineering Problem Analysis}
 
 \section{Sustainability of the Project/Work}
-Engineering sustainable enterprise software requires designing architectures that remain maintainable, scalable, and resource-efficient over long operational lifecycles. I addressed sustainability across three primary dimensions:
+Engineering sustainable enterprise software requires designing architectures that remain maintainable, scalable, and resource-efficient over long operational lifecycles. Sustainability is addressed across three primary dimensions:
 
 \begin{enumerate}
     \item \textbf{Technical Sustainability \& Modularity:} The software architecture separates back-office dealership operations (\texttt{car\_sales}) from customer-facing web commerce (\texttt{ecommerce}). By organizing functionality into independent Django applications with distinct models, views, and templates, future developers can introduce new features without modifying core legacy database logic. Furthermore, adopting standard ORM patterns and PEP-8 compliant code ensures long-term maintainability.
@@ -25,7 +25,7 @@ By replacing physical paper invoices, printed vehicle brochures, and paper inqui
 \section{Addressing Ethics and Ethical Issues}
 
 \subsection{Data Privacy \& Protection of Personal Information}
-Handling customer records, contact numbers, home addresses, and financial purchase histories introduces significant ethical responsibilities regarding data privacy. I implemented strict data protection measures throughout the software lifecycle:
+Handling customer records, contact numbers, home addresses, and financial purchase histories introduces significant ethical responsibilities regarding data privacy. Strict data protection measures are enforced throughout the software architecture:
 \begin{itemize}
     \item \textbf{Access Scoping:} Customer records are accessible only to authenticated store employees assigned to that specific store location. Unauthenticated public API endpoints strip out personal contact information, exposing only aggregate sales metrics.
     \item \textbf{Password Security:} User authentication uses Django's implementation of PBKDF2 with a SHA-256 hash digest, ensuring that user passwords are never stored in plaintext format.

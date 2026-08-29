@@ -20,7 +20,7 @@ The project schedule was organized into major phases and individual WBS activiti
 \scriptsize
 
 \begin{longtable}{@{}p{3cm}p{5.5cm}rrrp{1.8cm}@{}}
-\caption{Scheduling assumption: The project runs for 13 weeks.}
+\caption{Process/Activity-Wise Time Distribution and WBS Task Schedule}
 \label{tab:time-distribution}\\
 
 \toprule
@@ -175,14 +175,82 @@ The project schedule was organized into major phases and individual WBS activiti
 
 \end{longtable}
 
-\normalsize
+\subsection{Critical Path Method (CPM) Analysis}
+To determine the shortest possible project duration and identify time-critical tasks, I performed a Critical Path Method (CPM) network analysis based on the dependencies defined in Table~\ref{tab:time-distribution}. Each major phase was evaluated for Early Start (ES), Early Finish (EF), Late Start (LS), Late Finish (LF), and Total Float ($TF = LS - ES$).
+
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+    node distance=1.5cm and 1.8cm,
+    every node/.style={font=\scriptsize},
+    act/.style={rectangle, draw=indigo!80, fill=indigo!5, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, rounded corners=2pt},
+    crit/.style={rectangle, draw=red!80!black, fill=red!10, very thick, minimum width=2.4cm, minimum height=1.1cm, align=center, rounded corners=2pt},
+    arr/.style={-latex, thick, draw=gray!70},
+    critarr/.style={-latex, very thick, draw=red!80!black}
+]
+
+\node [crit] (p1) {\textbf{Phase 1.0}\\Setup (3d)\\{\tiny ES:0, EF:3}};
+\node [crit] (p2) [right=of p1] {\textbf{Phase 2.0}\\Database (7d)\\{\tiny ES:3, EF:10}};
+\node [crit] (p3) [above right=0.8cm and 1.2cm of p2] {\textbf{Phase 3.0}\\ERP Core (12d)\\{\tiny ES:10, EF:22}};
+\node [act]  (p4) [below right=0.8cm and 1.2cm of p2] {\textbf{Phase 4.0}\\E-Com (10d)\\{\tiny ES:10, EF:20}};
+\node [crit] (p5) [right=1.5cm of p3] {\textbf{Phase 5.0}\\Auth/RBAC (6d)\\{\tiny ES:22, EF:28}};
+\node [crit] (p6) [right=1.2cm of p5] {\textbf{Phase 6.0}\\APIs (8d)\\{\tiny ES:28, EF:36}};
+\node [crit] (p7) [above right=0.6cm and 1.2cm of p6] {\textbf{Phase 7.0}\\Analytics (7d)\\{\tiny ES:36, EF:43}};
+\node [act]  (p8) [below right=0.6cm and 1.2cm of p6] {\textbf{Phase 8.0}\\Messaging (4d)\\{\tiny ES:36, EF:40}};
+\node [crit] (p9) [below right=0.6cm and 1.4cm of p7] {\textbf{Phase 9.0}\\UI/Templates (14d)\\{\tiny ES:43, EF:57}};
+\node [crit] (p10) [right=1.5cm of p9] {\textbf{Phase 10.0}\\Test/Deploy (8d)\\{\tiny ES:57, EF:65}};
+
+\path [critarr] (p1) -- (p2);
+\path [critarr] (p2) |- (p3);
+\path [arr]     (p2) |- (p4);
+\path [critarr] (p3) -- (p5);
+\path [critarr] (p5) -- (p6);
+\path [arr]     (p4) |- (p6);
+\path [critarr] (p6) |- (p7);
+\path [arr]     (p6) |- (p8);
+\path [critarr] (p7) -| (p9);
+\path [arr]     (p8) -| (p9);
+\path [critarr] (p9) -- (p10);
+
+\end{tikzpicture}%
+}
+\caption{Activity-on-Node (AON) Critical Path Network Diagram (Red denotes Critical Path)}
+\label{fig:cpm_diagram}
+\end{figure}
+
+Table~\ref{tab:cpm_schedule} highlights the mathematical breakdown across the 10 development phases.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+\textbf{Phase} & \textbf{Title} & \textbf{Duration} & \textbf{ES} & \textbf{EF} & \textbf{LS} & \textbf{LF} & \textbf{Total Float} \\
+\midrule
+\textbf{1.0} & Project Setup & 3 & 0 & 3 & 0 & 3 & \textbf{0 (Critical)} \\
+\textbf{2.0} & Database Modeling & 7 & 3 & 10 & 3 & 10 & \textbf{0 (Critical)} \\
+\textbf{3.0} & Dealership ERP & 12 & 10 & 22 & 10 & 22 & \textbf{0 (Critical)} \\
+4.0 & Customer E-Commerce & 10 & 10 & 20 & 18 & 28 & 8 days \\
+\textbf{5.0} & Auth \& RBAC & 6 & 22 & 28 & 22 & 28 & \textbf{0 (Critical)} \\
+\textbf{6.0} & REST API Engine & 8 & 28 & 36 & 28 & 36 & \textbf{0 (Critical)} \\
+\textbf{7.0} & Analytics / SQL & 7 & 36 & 43 & 36 & 43 & \textbf{0 (Critical)} \\
+8.0 & Messaging Subsystem & 4 & 36 & 40 & 39 & 43 & 3 days \\
+\textbf{9.0} & Frontend UI Templates & 14 & 43 & 57 & 43 & 57 & \textbf{0 (Critical)} \\
+\textbf{10.0} & Testing \& Deployment & 8 & 57 & 65 & 57 & 65 & \textbf{0 (Critical)} \\
+\bottomrule
+\end{tabular}
+\caption{Critical Path Method Schedule Calculations (Duration in Working Days)}
+\label{tab:cpm_schedule}
+\end{table}
+
+The primary critical path is:
+$$\text{Phase 1.0} \rightarrow \text{Phase 2.0} \rightarrow \text{Phase 3.0} \rightarrow \text{Phase 5.0} \rightarrow \text{Phase 6.0} \rightarrow \text{Phase 7.0} \rightarrow \text{Phase 9.0} \rightarrow \text{Phase 10.0}$$
+This chain has a Total Float of 0 days and fixes the critical project schedule at exactly 65 working days (13 weeks).
 
 \section{Gantt Chart}
-To translate the Work Breakdown Structure into an actionable execution timeline, a 13-week (65-day) project schedule was constructed using a Gantt chart, sequencing the ten major development phases from initial configuration through final deployment. The timeline is structured such that foundational architecture precedes dependent modules: Project Setup \& Configuration (Days 1--4) and Database Design \& Data Modeling (Days 5--13) are scheduled first, since all subsequent phases rely on a stable relational schema and development environment. Days 14--20 are allocated to the Internal ERP/CRM System and Days 21--30 to the Customer E-Commerce System (\texttt{ecommerce}), sequenced consecutively to ensure that architectural patterns established during the ERP build directly inform the customer-facing storefront.
-
-Authentication \& Authorization (Days 31--34) is positioned after both core applications are functionally scaffolded, since securing endpoints requires routes and database models to already exist. API Development (Days 35--40) follows immediately after, exposing authenticated ERP and e-commerce capabilities to external clients and frontend consumers. Analytics \& Reporting (Days 41--48) and Messaging \& Notifications (Days 49--53) are scheduled as largely sequential modules layered on top of the completed core, followed by Frontend/UI Templates (Days 54--60) once backend APIs are stable. The final phase, Testing \& Deployment (Days 61--65), provides a dedicated window for integration testing, defect remediation, and production release preparation across the entire system.
-
-Overall, the schedule is front-loaded on database modeling and architecture to prevent costly downstream refactoring, while back-loading validation with a dedicated testing buffer prior to deployment.
+To translate the Work Breakdown Structure into an actionable execution timeline, Figure~\ref{fig:gantt_chart} illustrates the phased execution schedule.
 
 \begin{figure}[H]
 \centering
@@ -192,32 +260,21 @@ Overall, the schedule is front-loaded on database modeling and architecture to p
 \end{figure}
 
 \section{Process/Activity wise Resource Allocation}
-
-In the context of this engineering project, "resource allocation" refers to the distribution of developmental effort across distinct functional roles typically divided among software engineering specialists: Database Design, Backend/API Development, Frontend Development, Quality Assurance (QA) \& Testing, and DevOps/Environment Configuration. The proportion of effort per phase is determined based on the technical nature of the work performed; for example, Database Design \& Data Modeling (Phase 2.0) represents predominantly Database Designer effort, whereas Frontend/UI Templates (Phase 9.0) represents Frontend Developer effort with QA verification for cross-browser consistency. Figure~\ref{fig:resource_allocation} visualizes this role-wise effort distribution (in person-days) across all ten WBS phases, and Table~\ref{tab:resource-summary} summarizes the total person-days and percentage share contributed by each role over the full 65-day schedule.
+In this project, resource allocation quantifies how development hours were distributed across the specialized engineering competencies required to build the system: Database Architecture, Backend/API Programming, Frontend Design, Quality Assurance/Testing, and DevOps/System Administration. Effort distribution was driven by architectural complexity; for instance, Phase 2.0 demanded dedicated database modeling and normalization effort, while Phase 9.0 concentrated on responsive UI layout design and cross-browser testing.
+Figure~\ref{fig:resource_allocation} illustrates the person-day distribution across competencies, and Table~\ref{tab:resource-summary} summarizes the percentage contribution of each role over the 65-day lifecycle.
 
 \begin{figure}[H]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.75\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{axis}[
     xbar,
-    width=15cm,
-    height=13cm,
-    bar width=22pt,
-    xlabel={Days},
-    xlabel style={font=\bfseries\color{ganttblue}},
-    symbolic y coords={DevOps,QA/Tester,Frontend Developer,Backend/API Developer,Database Designer},
+    width=10cm,
+    height=6.5cm,
+    xlabel={Allocated Effort (Days)},
+    symbolic y coords={DevOps, Frontend Developer, Database Designer, QA/Tester, Backend/API Developer},
     ytick=data,
-    y tick label style={font=\bfseries\small, color=ganttblue, align=right},
-    xtick={0,5,10,15,20,25,30},
-    xmin=0, xmax=32,
-    enlarge y limits=0.15,
-    axis line style={draw=none},
-    tick style={draw=none},
-    xmajorgrids=true,
-    grid style={dashed, gray!30},
     nodes near coords,
-    nodes near coords align={horizontal},
     nodes near coords style={font=\bfseries\small, color=ganttblue, xshift=4pt},
     every node near coord/.append style={anchor=west},
 ]
@@ -237,7 +294,7 @@ In the context of this engineering project, "resource allocation" refers to the 
 
 \begin{table}[H]
 \centering
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{1.4}
 \resizebox{0.75\textwidth}{!}{%
 \begin{tabular}{@{}lrr@{}}
 \toprule
@@ -257,4 +314,34 @@ DevOps / Environment Configuration & 4.80 & 7.4\% \\
 \label{tab:resource-summary}
 \end{table}
 
-As the summary illustrates, the largest share of effort, roughly 45\%, is allocated to Backend/API Development, reflecting the reality that Phases 3.0 through 8.0 (ERP, E-Commerce, Authentication, API, Analytics, and Messaging) are primarily server-side engineering tasks. QA/Testing effort (20\%) was distributed across nearly every phase rather than concentrated solely in Phase 10.0, reflecting an incremental validation practice alongside each functional module. Database Design (16.5\%) and Frontend Development (11.5\%) were front-loaded and back-loaded respectively, occurring predominantly in Phase 2.0 and Phase 9.0, while DevOps effort (7.4\%) was concentrated during initial environment setup and final production deployment.
+As demonstrated by the resource breakdown, Backend and API development accounted for the primary share of effort (~44.6\%), reflecting the intensive server-side logic required across both the ERP and e-commerce applications. Rather than deferring testing until the end of the project, Quality Assurance (~20.0\%) was integrated continuously across all modules to detect schema regressions and permission defects early.
+
+\section{Estimated Costing}
+To evaluate the financial feasibility of the engineering project, I conducted an estimated costing analysis covering human labor, hardware assets, software tools, and cloud infrastructure.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+\textbf{Category} & \textbf{Item Description} & \textbf{Rate / Unit} & \textbf{Units} & \textbf{Total (BDT)} \\
+\midrule
+\textbf{Human Labor} & Software Engineering Intern & 25,000 / month & 3 Months & 75,000 \\
+                     & Senior ICT Mentor / Supervisor & 20,000 / month & 3 Months (Part-time) & 60,000 \\
+\textbf{Hardware}    & Development Workstation (i7, 32GB) & 2,500 / month & 3 Months (Depreciation) & 7,500 \\
+                     & Staging Local Testing Machine & 1,500 / month & 3 Months & 4,500 \\
+\textbf{Software}    & JetBrains PyCharm / VS Code Tools & Free/Community & -- & 0 \\
+                     & Postman API Suite (Free Tier) & Free & -- & 0 \\
+                     & MySQL / MariaDB Open-Source DB & Free/GPL & -- & 0 \\
+\textbf{Infrastructure}& Cloud VPS Staging Server (Linux) & 1,500 / month & 3 Months & 4,500 \\
+                     & Domain Registration \& TLS/SSL & 1,800 / year & 1 Unit & 1,800 \\
+\midrule
+\textbf{Total}       & \textbf{Estimated Financial Budget} & & & \textbf{153,300 BDT} \\
+\bottomrule
+\end{tabular}
+\caption{Estimated Financial Costing and Resource Expenditure}
+\label{tab:estimated_costing}
+\end{table}
+
+By utilizing an open-source technology stack (Django, Python, MariaDB, and Bootstrap 5), commercial licensing expenses were eliminated, keeping the total development budget strictly within operational feasibility limits.

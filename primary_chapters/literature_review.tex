@@ -2,27 +2,49 @@
 
 \section{Relationship with Undergraduate Studies}
 
-This internship project synthesizes core theoretical and practical principles from the undergraduate Computer Science \& Engineering curriculum at Independent University, Bangladesh (IUB). The engineering tasks performed during the 3-month placement at Radiant Pharmaceuticals Limited map directly to key academic course domains:
+The engineering challenges encountered during my internship at Radiant Pharmaceuticals Limited provided an empirical testing ground for theoretical concepts cultivated throughout my undergraduate curriculum at Independent University, Bangladesh (IUB). The system's architectural layers reflect specific coursework competencies:
 
 \begin{itemize}
-    \item \textbf{Database Management Systems (CSC303):} Designing relational star-schema tables, enforcing foreign key integrity, creating composite indexes, and writing optimized SQL aggregation queries.
-    \item \textbf{Object-Oriented Programming (CSC203):} Structuring Django models, custom authentication backends, and view controllers using clean Python object-oriented design patterns.
-    \item \textbf{Web Engineering (CSC343):} Developing REST API endpoints, implementing responsive web interfaces, and managing client-server HTTP request-response cycles.
-    \item \textbf{Software Engineering (CSC305):} Applying Work Breakdown Structures (WBS), Gantt chart scheduling, requirement analysis, automated unit testing, and software maintainability practices.
+    \item \textbf{Database Systems (CSC303):} Implemented 3NF normalization across operational tables, structured dimensional star-schema fact and dimension tables, created composite B-tree indexes, and optimized complex multi-table SQL queries.
+    \item \textbf{Object-Oriented Programming (CSC203):} Applied modular class inheritance, encapsulation, and custom backend extensions in Python to structure Django models, controllers, and authentication handlers.
+    \item \textbf{Data Structures and Algorithms (CSC202):} Utilized hash-map lookups for constant-time ($O(1)$) employee supervisor tree traversals and indexed binary searching for high-speed vehicle filtering.
+    \item \textbf{Web Applications (CSC343):} Engineered RESTful JSON endpoints using Django REST Framework, implemented asynchronous AJAX DOM updates, and designed responsive layouts with Bootstrap 5.
+    \item \textbf{Operating Systems and Networking (CSC401):} Handled concurrent database transactions to prevent race conditions, configured Linux environments, and debugged HTTP request-response cycles.
+    \item \textbf{Software Engineering (CSC305):} Conducted formal requirement elicitation, derived Work Breakdown Structures (WBS), performed Critical Path Method (CPM) scheduling, and authored automated unit test suites.
 \end{itemize}
 
 \section{Related Works}
 
-Academic and industry literature highlights various strategies for enterprise software development, relational query optimization, and e-commerce platform architecture:
+\subsection{Enterprise Web Frameworks and Architecture}
+Pressman and Maxim~\cite{pressman2014software} underline that scalable web engineering demands rigid separation of concerns between presentation, business rules, and persistent storage. Melé~\cite{django_by_example} demonstrates that Django's Model-View-Template (MVT) design pattern provides robust built-in defenses against cross-site scripting (XSS), cross-site request forgery (CSRF), and SQL injection vulnerabilities.
 
-\subsection{Web-Based E-Commerce and Enterprise Architecture}
-Junhua~\cite{junhua2011design} investigated the design and implementation of web-based e-commerce systems, emphasizing that modular multi-tier architectures provide the necessary separation between presentation, application logic, and backend database storage. Implementing a clean separation of concerns reduces software defect rates and facilitates future system scalability, a structural principle adopted in the dual-application partitioning of this automotive platform.
+\subsection{Role-Based Access Control (RBAC) in Enterprise Systems}
+Sandhu et al.~\cite{sandhu1996role} established foundational models for Role-Based Access Control, proving that grouping permissions into hierarchical roles substantially reduces administrative complexity compared to user-level assignment. In this project, a 9-tier RBAC model extends Sandhu's principles to reflect real-world dealership chain-of-command hierarchies.
 
-\subsection{Relational Database Architecture and Query Optimization}
-Vicente et al.~\cite{vicente2021rdbms} evaluated database architectures and query performance in web applications, demonstrating that while Object-Relational Mapping (ORM) tools simplify standard CRUD transactions, complex analytical aggregations over large relational datasets suffer measurable latency due to object hydration and redundant join overhead. Bypassing standard ORM layers using direct, indexed SQL query execution minimizes memory consumption and delivers sub-20ms query response times, a strategy implemented in the executive reporting engine of this project.
+\subsection{Relational Database Performance vs.\ ORM Overhead}
+Vicente et al.~\cite{vicente2021rdbms} evaluated RDBMS performance in web systems, noting that while ORMs accelerate routine CRUD workflows, they create severe memory and execution bottlenecks during complex multi-table aggregations due to excessive object hydration. Bypassing the ORM via raw SQL queries mitigates this latency, a finding directly validated in this report's analytical reporting layer.
 
-\subsection{E-Commerce Development and Usability Bottlenecks}
-Ullah et al.~\cite{ullah2016developing} analyzed practical methodologies for developing e-commerce web applications, highlighting the importance of responsive catalog navigation, robust session management, and secure transactional workflows for customer retention. Abdullah et al.~\cite{abdullah2021evaluating} evaluated developer usability and execution overhead across e-commerce content management systems, noting that off-the-shelf monolithic CMS platforms introduce significant runtime friction and unnecessary database complexity. In this project, custom lightweight Django templates and REST endpoints are engineered to avoid CMS bloat while maintaining responsive user experience.
+\subsection{Comparative Analysis with Existing Solutions}
+Table~\ref{tab:related_works_comparison} compares the proposed system with prominent commercial and open-source solutions.
 
-\subsection{Recommendation Engines and Search Filtering Performance}
-Savadatti and Krishna~\cite{savadatti2024implementation} reviewed collaborative filtering and algorithmic recommendation systems in e-commerce, noting that machine-learning recommendation models frequently introduce cold-start latency and computational bottlenecks when evaluating newly cataloged inventory items. To eliminate cold-start delays and deliver instant vehicle discovery, the platform incorporates an indexed database search and attribute filter engine that provides real-time catalog exploration without recommendation overhead.
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Feature / Capability} & \textbf{DealerSocket} & \textbf{Odoo Auto} & \textbf{Generic CMS} & \textbf{Proposed System} \\
+\midrule
+9-Tier Hierarchical RBAC & Limited & Partial & No & \textbf{Yes (Custom 9-Level)} \\
+Direct SQL Star-Schema Analytics & No (ORM/ETL) & No (ORM) & No & \textbf{Yes ($<$20ms Latency)} \\
+Integrated B2C Showroom & Add-on & Separate Module & Yes & \textbf{Yes (Unified App)} \\
+4-Vehicle Spec Comparison & No & No & Plugin-dependent & \textbf{Yes (Native Matrix)} \\
+Direct Store Employee Messaging & SMS/CRM & Email only & Third-party & \textbf{Yes (Direct Inbox)} \\
+Zero-License Deployment Cost & No (High Cost) & Partial & Yes & \textbf{Yes (100\% Open Source)} \\
+\bottomrule
+\end{tabular}%
+}
+\caption{Feature Comparison Matrix Between Existing Systems and Proposed Platform}
+\label{tab:related_works_comparison}
+\end{table}

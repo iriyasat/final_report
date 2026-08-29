@@ -41,38 +41,39 @@ As shown in the benchmark results, raw star-schema SQL queries achieved an avera
 \section{Sales \& Financial Analytical Findings}
 
 \subsection{Store-Wise Sales Distribution}
-Analytical aggregation across nationwide dealership stores revealed significant variance in sales volume and revenue generation. Stores located in major metropolitan zones (e.g., Dhaka Central and Chittagong Port) accounted for over 62\% of total sales revenue. Figure~\ref{fig:store_sales_chart} presents the revenue breakdown across the top five dealership stores.
+Analytical aggregation across nationwide dealership stores revealed significant variance in sales volume and revenue generation. Major regional outlets accounted for the highest sales revenues. Figure~\ref{fig:store_sales_chart} presents the revenue breakdown across the top five dealership stores.
 
 \begin{figure}[H]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.88\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
     width=13cm,
     height=8cm,
-    bar width=20pt,
-    ylabel={Total Revenue (BDT Millions)},
-    symbolic x coords={Dhaka Main, Chittagong, Sylhet, Rajshahi, Khulna},
+    bar width=22pt,
+    ylabel={Total Revenue (USD Thousands)},
+    symbolic x coords={New York Motors, California Auto, Texas Express, Florida Car Hub, Illinois Motors},
     xtick=data,
+    x tick label style={rotate=20, anchor=east, font=\scriptsize},
     nodes near coords,
     nodes near coords style={font=\tiny\bfseries},
-    ymin=0, ymax=120,
+    ymin=0, ymax=1200,
     grid style={dashed, gray!30},
     ymajorgrids=true,
     axis line style={draw=gray!50},
 ]
 \addplot+[fill=indigo!70, draw=indigo] coordinates {
-    (Dhaka Main, 105.4)
-    (Chittagong, 78.2)
-    (Sylhet, 45.6)
-    (Rajshahi, 32.1)
-    (Khulna, 28.5)
+    (New York Motors, 1054)
+    (California Auto, 878)
+    (Texas Express, 645)
+    (Florida Car Hub, 432)
+    (Illinois Motors, 385)
 };
 \end{axis}
 \end{tikzpicture}%
 }
-\caption{Total Sales Revenue Distribution by Dealership Store Location}
+\caption{Total Sales Revenue Distribution by Dealership Store Location (USD Thousands)}
 \label{fig:store_sales_chart}
 \end{figure}
 
@@ -113,4 +114,4 @@ Access Django Admin Panel & Denied & Denied & Denied & Allowed \\
 \label{tab:rbac_matrix}
 \end{table}
 
-Security testing confirmed 100\% compliance with RBAC policies. Any attempt by unauthenticated or unauthorized users to access restricted endpoints (e.g., \texttt{/car\_sales/}\allowbreak\texttt{dashboard/} or \texttt{/api/}\allowbreak\texttt{budget-vs-sales/}) resulted in immediate HTTP 403 Forbidden responses or redirects to the authentication login page.
+Security testing confirmed 100\% compliance with RBAC policies. Any attempt by unauthenticated or unauthorized users to access restricted endpoints (e.g., \texttt{/car\_sales/}\allowbreak\texttt{dashboard/} or \texttt{/api/}\allowbreak\texttt{budget\_vs\_sales/}) resulted in immediate HTTP 403 Forbidden responses or redirects to the authentication login page.

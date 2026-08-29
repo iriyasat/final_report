@@ -234,7 +234,7 @@ The foundational data structure relies on clean Django ORM model definitions. Fo
 \begin{verbatim}
 class SellingInfo(models.Model):
     selling_info_id = models.AutoField(primary_key=True)
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(VehicleInfo, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
@@ -264,19 +264,20 @@ ORDER BY total_revenue DESC;
 \end{tcolorbox}
 
 \subsection{REST API Endpoint Integration}
-Five specialized REST API endpoints were developed using Django REST Framework to expose analytical metrics to dynamic frontend charting components:
+Six specialized REST API endpoints were developed using Django REST Framework to expose analytical metrics and customer actions to dynamic frontend charting components:
 \begin{enumerate}
-    \item \texttt{/api/store-sales/}: Returns vehicle sales and revenue aggregated by store.
-    \item \texttt{/api/employee-sales/}: Returns total vehicle sales and commissions earned per rep.
-    \item \texttt{/api/customer-}\allowbreak\texttt{vehicle-sales/}: Summarizes vehicle purchase distributions.
-    \item \texttt{/api/customer-}\allowbreak\texttt{store-spending/}: Aggregates total customer expenditures ranked by store.
-    \item \texttt{/api/budget-vs-sales/}: Calculates annual budget targets against actual sales revenues.
+    \item \texttt{/api/store\_sales/}
+    \item \texttt{/api/employee\_sales/}
+    \item \texttt{/api/store\_vehicle\_sales/}
+    \item \texttt{/api/customer\_vehicle\_sales/}
+    \item \texttt{/api/budget\_vs\_sales/}
+    \item \texttt{/api/wishlist/toggle/}
 \end{enumerate}
 
 \section{Testing}
 
 \subsection{Input Data Specification}
-Testing was performed using realistic synthetic datasets created via custom Django management commands (\texttt{python manage.py seed\_db}). Test datasets included 50 vehicle models across 15 brands, 20 dealership stores in 8 cities, 100 sales representatives, 500 customer records, and over 1,200 transaction entries spanning 2024–2026.
+Testing was performed using realistic synthetic datasets created via custom Django management commands (\texttt{python manage.py seed\_customer\_data}, \texttt{seed\_wishlists}, \texttt{seed\_test\_drives}, \texttt{seed\_dummy\_orders}, and \texttt{seed\_customer\_messages}). Test datasets included 50 vehicle models across 15 brands, 20 dealership stores in 8 cities, 100 sales representatives, 500 customer records, and over 1,200 transaction entries spanning 2024–2026.
 
 \subsection{Output Validation}
 Output validation confirmed that:
@@ -316,4 +317,19 @@ TC-10 & RBAC & Rep accesses Admin View & HTTP 403 Forbidden redirect & Pass \\
 \end{table}
 
 \subsection{Test Results Summary}
-Automated unit test suites executed via Django's test runner (\texttt{python manage.py test}) achieved a 100\% pass rate across 45 test methods, covering model validation, view permissions, API serializers, and mathematical invoice formulas.
+Automated unit test suites executed via Django's test runner achieved a 100\% pass rate across 21 test routines, covering model validation, view permissions, API serializers, and mathematical invoice formulas.
+
+\begin{tcolorbox}[colback=black!5,colframe=black!60,arc=2pt,boxrule=0.5pt]
+\small
+\begin{verbatim}
+$ ./venv/bin/python project1/manage.py test car_sales ecommerce
+Creating test database for alias 'default'...
+.....................
+----------------------------------------------------------------------
+Ran 21 tests in 18.927s
+
+OK
+Destroying test database for alias 'default'...
+System check identified no issues (0 silenced).
+\end{verbatim}
+\end{tcolorbox}

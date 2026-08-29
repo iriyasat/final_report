@@ -74,7 +74,7 @@
 \input{entry_chapters/abstract.tex}
 \addcontentsline{toc}{chapter}{\numberline{}Abstract}
 
-%Contents, Figures \& Tables
+%Contents, Figures & Tables
 \tableofcontents
 \listoffigures
 \listoftables
@@ -93,21 +93,24 @@
   \renewcommand{\headrulewidth}{0pt}%
 }
 
+% Active Chapters (Showing until Chapter 3 for faculty submission)
 \input{primary_chapters/introduction}
 \input{primary_chapters/literature_review}
 \input{primary_chapters/project_management_and_financing}
-\input{primary_chapters/methodology}
-\input{primary_chapters/body_of_the_project}
-\input{primary_chapters/results_and_analysis}
-\input{primary_chapters/project_as_engineering_problem_analysis}
-\input{primary_chapters/lesson_learned}
-\input{primary_chapters/future_work_and_conclusion}
+
+% Subsequent chapters (Uncomment when ready to include in full dissertation)
+% \input{primary_chapters/methodology}
+% \input{primary_chapters/body_of_the_project}
+% \input{primary_chapters/results_and_analysis}
+% \input{primary_chapters/project_as_engineering_problem_analysis}
+% \input{primary_chapters/lesson_learned}
+% \input{primary_chapters/future_work_and_conclusion}
 
 % bibliography
 \bibliographystyle{ieeetr}
 \bibliography{bibtex}
 \addcontentsline{toc}{chapter}{\numberline{}Bibliography}
 
-\input{primary_chapters/consent_form}
+% \input{primary_chapters/consent_form}
 
 \end{document}

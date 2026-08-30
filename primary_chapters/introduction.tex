@@ -3,7 +3,7 @@
 \section{Overview / Background of the Work}
 Automotive retail networks operating across distributed regional outlets face persistent bottlenecks when synchronizing physical showroom inventory with digital sales channels. Traditionally, dealerships have depended on disparate desktop applications, offline spreadsheet records, or isolated point-of-sale registers. This fragmentation yields severe operational friction: stock availability discrepancies, slow inquiry turnaround times between prospective buyers and branch representatives, and delayed financial reporting caused by unindexed data sources.
 
-During my 3-month placement within the ICT Wing (Management Information Systems - MIS) at \textbf{Radiant Pharmaceuticals Limited} from May 17, 2026, to August 17, 2026, under the joint supervision of Mr.~Ayan Chowdhury (Senior Officer, ICT) and Mr.~Azwad Abid (Lecturer, CSE Department, IUB), I engineered a centralized web platform to overcome these operational inefficiencies. Within Radiant's MIS division, prototypes of supply chain tracking, role hierarchies, and transaction engines are routinely evaluated. This project served as an advanced capstone to model high-throughput enterprise resource planning (ERP) alongside customer-facing web commerce.
+During my 3-month placement within the ICT Wing (MIS Department) at \textbf{Radiant Pharmaceuticals Limited} from May 17, 2026, to August 17, 2026, under the joint supervision of Mr.~Ayan Chowdhury (Senior Officer, ICT) and Mr.~Azwad Abid (Lecturer, CSE Department, IUB), I engineered a centralized web platform to overcome these operational inefficiencies. Within Radiant's MIS division, prototypes of supply chain tracking, role hierarchies, and transaction engines are routinely evaluated. This project served as an advanced capstone to model high-throughput enterprise resource planning (ERP) alongside customer-facing web commerce.
 
 The resulting software consolidates dealership back-office management (\texttt{car\_sales}) and a consumer-facing digital showroom (\texttt{ecommerce}) within a unified, high-performance Django web framework instance.
 
@@ -18,19 +18,19 @@ The overarching goal was to construct a robust, full-stack automotive platform c
     \item \textbf{Establish Empirical Reliability:} Expose clean REST API routes and demonstrate system correctness through a 21-case automated test suite.
 \end{enumerate}
 
-\section{Scopes}
+% \section{Scopes}
 
-\subsection{In-Scope System Capabilities}
-\begin{itemize}
-    \item \textbf{Back-Office Dealership Governance:} Managing geographic store locations, multi-tiered staff directories, vehicle master catalogs, and inventory lifecycle states (\texttt{Available}, \texttt{Pre-Order}, \texttt{Sold}).
-    \item \textbf{Automated Invoicing Engine:} Calculating MMR benchmark pricing, applying percentage-based discounts, and binding sales records to customer accounts atomically.
-    \item \textbf{Customer Storefront Modules:} Multi-faceted vehicle filtering (Make, Body Style, Transmission, Location, Price Slider), comparative spec matrices, and direct store message dispatching.
-    \item \textbf{Executive Business Intelligence:} Visualizing store revenue distribution, sales representative quotas, and annual budget variances.
-\end{itemize}
+% \subsection{In-Scope System Capabilities}
+% \begin{itemize}
+%     \item \textbf{Back-Office Dealership Governance:} Managing geographic store locations, multi-tiered staff directories, vehicle master catalogs, and inventory lifecycle states (\texttt{Available}, \texttt{Pre-Order}, \texttt{Sold}).
+%     \item \textbf{Automated Invoicing Engine:} Calculating MMR benchmark pricing, applying percentage-based discounts, and binding sales records to customer accounts atomically.
+%     \item \textbf{Customer Storefront Modules:} Multi-faceted vehicle filtering (Make, Body Style, Transmission, Location, Price Slider), comparative spec matrices, and direct store message dispatching.
+%     \item \textbf{Executive Business Intelligence:} Visualizing store revenue distribution, sales representative quotas, and annual budget variances.
+% \end{itemize}
 
-\subsection{Out of Scope and System Limitations}
-\begin{itemize}
-    \item \textbf{Live Payment Gateways:} Monetary checkouts are handled through simulated database transactions rather than direct integration with commercial banking APIs (e.g., Stripe, SSLCommerz).
-    \item \textbf{Hardware Telematics:} Physical vehicle tracking through OBD-II vehicle diagnostic hardware or GPS sensors was not included in this phase.
-    \item \textbf{Native Mobile Binaries:} The user interface is delivered as a mobile-responsive web application rather than dedicated iOS or Android application packages.
-\end{itemize}
+% \subsection{Out of Scope and System Limitations}
+% \begin{itemize}
+%     \item \textbf{Live Payment Gateways:} Monetary checkouts are handled through simulated database transactions rather than direct integration with commercial banking APIs (e.g., Stripe, SSLCommerz).
+%     \item \textbf{Hardware Telematics:} Physical vehicle tracking through OBD-II vehicle diagnostic hardware or GPS sensors was not included in this phase.
+%     \item \textbf{Native Mobile Binaries:} The user interface is delivered as a mobile-responsive web application rather than dedicated iOS or Android application packages.
+% \end{itemize}

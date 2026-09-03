@@ -1,117 +1,127 @@
 \chapter{Results \& Analysis}
 
-\section{Overview of Analytical Results}
-Following system implementation and data seeding, empirical performance benchmarking and analytical data evaluation were conducted across both the back-office ERP engine (\texttt{car\_sales}) and the front-office web application (\texttt{ecommerce}). The primary objectives were to validate query execution speeds under multi-table relational joins, verify analytical accuracy across star-schema reporting views, measure user interface responsiveness, and assess operational efficacy.
+\section{Overview of System Results}
+Following the implementation of the dual-application architecture, the completed platform was evaluated across its administrative back-office ERP engine (\texttt{car\_sales}) and its public customer storefront (\texttt{ecommerce}). Rather than evaluating theoretical models, assessment was conducted using the deployed web user interfaces operating over live dealership data.
 
-\section{System Performance \& Query Benchmarks}
-To ensure that complex analytical dashboards render smoothly without degrading server response times, query execution latency was evaluated across three primary database access patterns:
+The evaluation demonstrates the operational workflow across five core functional areas:
 \begin{enumerate}
-    \item Standard Django ORM QuerySets (using \texttt{select\_related} and \texttt{prefetch\_related}).
-    \item Optimized Django ORM Aggregations (using \texttt{annotate()} and \texttt{aggregate()}).
-    \item Raw Star-Schema SQL Queries (leveraging targeted database indexing).
+    \item \textbf{Executive Dealership Dashboard:} Real-time consolidation of enterprise sales metrics, order approvals, and sales trend tracking.
+    \item \textbf{Customer Vehicle Catalog:} Dynamic inventory exploration featuring asynchronous multi-parameter filtering and price range navigation.
+    \item \textbf{Vehicle Detail \& Reservation Portal:} Transparent pricing disclosures based on MMR valuations, digital reservation workflows, and store inquiry dispatching.
+    \item \textbf{Store Sales Analytical Reporting:} Specialized administrative reporting powered by hand-crafted star-schema SQL queries and REST API endpoints.
+    \item \textbf{Sales Quota \& Budget Variance Tracking:} Employee-level performance monitoring comparing monthly volume and revenue targets against realized sales.
+    \item \textbf{Store CRM \& Customer Inquiry Management:} Integrated showroom messaging enabling direct customer-to-salesperson communication.
 \end{enumerate}
 
-Table~\ref{tab:query_benchmarks} summarizes average execution times measured over 100 sample executions against a database seeded with 1,250 transaction entries, 500 customers, and 100 sales representatives.
-
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Analytical Query Domain} & \textbf{Standard ORM (ms)} & \textbf{Annotated ORM (ms)} & \textbf{Raw Star SQL (ms)} \\
-\midrule
-Store Sales Summary & 142.5 & 45.2 & 12.8 \\
-Employee Performance Ranking & 185.0 & 58.4 & 14.1 \\
-Budget vs.\ Actual Variance & 120.8 & 38.6 & 9.5 \\
-Customer Spending Analysis & 210.4 & 62.1 & 16.3 \\
-Inventory Status Breakdown & 95.2 & 28.3 & 7.2 \\
-\midrule
-\textbf{Average Latency} & \textbf{150.8 ms} & \textbf{46.5 ms} & \textbf{12.0 ms} \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Database Query Latency Benchmarks Across Query Strategies}
-\label{tab:query_benchmarks}
-\end{table}
-
-As shown in the benchmark results, raw star-schema SQL queries achieved an average execution latency of 12.0 ms, representing a 92\% reduction in latency compared to unoptimized ORM queries. This substantial improvement stems from avoiding redundant model instantiation overhead and leveraging composite indexes on \texttt{(store\_id, sale\_date)} and \texttt{(employee\_id, sale\_price)}.
-
-\section{Sales \& Financial Analytical Findings}
-
-\subsection{Store-Wise Sales Distribution}
-Analytical aggregation across nationwide dealership stores revealed significant variance in sales volume and revenue generation. Major regional outlets accounted for the highest sales revenues. Figure~\ref{fig:store_sales_chart} presents the revenue breakdown across the top five dealership stores.
+\clearpage
+\section{Back-Office ERP Dashboard Implementation}
+Figure~\ref{fig:ui_erp_dashboard} illustrates the primary executive dashboard of the \texttt{car\_sales} application viewed under an administrative session.
 
 \begin{figure}[H]
 \centering
-\resizebox{0.88\textwidth}{!}{%
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    width=13cm,
-    height=8cm,
-    bar width=22pt,
-    ylabel={Total Revenue (USD Thousands)},
-    symbolic x coords={New York Motors, California Auto, Texas Express, Florida Car Hub, Illinois Motors},
-    xtick=data,
-    x tick label style={rotate=20, anchor=east, font=\scriptsize},
-    nodes near coords,
-    nodes near coords style={font=\tiny\bfseries},
-    ymin=0, ymax=1200,
-    grid style={dashed, gray!30},
-    ymajorgrids=true,
-    axis line style={draw=gray!50},
-]
-\addplot+[fill=indigo!70, draw=indigo] coordinates {
-    (New York Motors, 1054)
-    (California Auto, 878)
-    (Texas Express, 645)
-    (Florida Car Hub, 432)
-    (Illinois Motors, 385)
-};
-\end{axis}
-\end{tikzpicture}%
-}
-\caption{Total Sales Revenue Distribution by Dealership Store Location (USD Thousands)}
-\label{fig:store_sales_chart}
+\includegraphics[width=0.82\textwidth]{images/ui_erp_dashboard.png}
+\caption{Dealership ERP Executive Dashboard Interface}
+\label{fig:ui_erp_dashboard}
 \end{figure}
 
-\subsection{Budget Target vs.\ Realized Sales Variance}
-By comparing annual store target budgets stored in the \texttt{Budget} table against actual invoice sales recorded in \texttt{SellingInfo}, the system automatically computes budget achievement percentages. Out of 20 dealership stores, 14 stores met or exceeded their annual revenue targets (achievement rate $\ge 100\%$), while 6 stores experienced slight negative variances due to localized supply constraints.
-
-\section{User Interface \& Operational Efficacy}
-The integration of the customer-facing \texttt{ecommerce} storefront directly with the \texttt{car\_sales} ERP engine yielded noticeable operational workflow improvements:
+As shown in Figure~\ref{fig:ui_erp_dashboard}, the executive dashboard provides dealership managers with instantaneous visibility across enterprise operations:
 \begin{itemize}
-    \item \textbf{Inquiry Response Time:} Directly routing customer messages to assigned store employee inboxes reduced average inquiry turnaround time from 24 hours (via manual email routing) to under 45 minutes.
-    \item \textbf{Order Processing Efficiency:} Digital order submission and automated invoice generation reduced manual data entry errors by 95\% compared to paper-based logs.
-    \item \textbf{Page Load Times:} Frontend pages utilizing Bootstrap 5 and minified static assets achieved Largest Contentful Paint (LCP) scores under 1.2 seconds across standard broadband connections.
+    \item \textbf{Key Performance Indicators (KPIs):} Prominently displays aggregate metrics including total completed orders (440,396), gross transaction revenue (\$5.95 Billion USD), and registered customer accounts (50,004).
+    \item \textbf{Interactive Sales Trend Chart:} Renders monthly sales transaction volumes alongside gross revenue curves, allowing management to visually assess seasonal fluctuations and branch performance.
+    \item \textbf{Recent Operational Feed:} Streams live transaction entries in real time, displaying vehicle models, buyer names, and finalized selling prices.
+    \item \textbf{Pending Order Approval Module:} Enables supervisors to review incoming e-commerce vehicle holding requests directly from the dashboard, with one-click \texttt{Approve} and \texttt{Reject} actions that trigger transactional invoice generation.
 \end{itemize}
 
-\section{Security \& RBAC Validation}
-To verify that unauthorized users cannot view or modify restricted enterprise data, a security role-access audit was conducted across four user tiers. Table~\ref{tab:rbac_matrix} shows the access validation matrix verified during system testing.
+\clearpage
+\section{Customer E-Commerce Catalog Experience}
+Figure~\ref{fig:ui_ecommerce_catalog} presents the customer-facing inventory exploration portal within the \texttt{ecommerce} application.
 
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-\textbf{System Feature / Endpoint} & \textbf{Customer} & \textbf{Sales Rep} & \textbf{Store Manager} & \textbf{Admin} \\
-\midrule
-Browse Public Catalog & Allowed & Allowed & Allowed & Allowed \\
-Schedule Test Drive / Cart & Allowed & Allowed & Allowed & Allowed \\
-Record Vehicle Sale & Denied & Allowed & Allowed & Allowed \\
-Generate Financial Invoice & Denied & Allowed & Allowed & Allowed \\
-View Analytical Dashboards & Denied & Denied & Allowed & Allowed \\
-Modify Employee Hierarchy & Denied & Denied & Denied & Allowed \\
-Access Django Admin Panel & Denied & Denied & Denied & Allowed \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Role-Based Access Control (RBAC) Permission Enforcement Matrix}
-\label{tab:rbac_matrix}
-\end{table}
+\includegraphics[width=0.82\textwidth]{images/ui_ecommerce_catalog.png}
+\caption{Customer E-Commerce Vehicle Catalog and Filtering Interface}
+\label{fig:ui_ecommerce_catalog}
+\end{figure}
 
-Security testing confirmed 100\% compliance with RBAC policies. Any attempt by unauthenticated or unauthorized users to access restricted endpoints (e.g., \texttt{/car\_sales/}\allowbreak\texttt{dashboard/} or \texttt{/api/}\allowbreak\texttt{budget\_vs\_sales/}) resulted in immediate HTTP 403 Forbidden responses or redirects to the authentication login page.
+The catalog interface is designed to deliver a responsive, consumer-friendly browsing experience:
+\begin{itemize}
+    \item \textbf{Live Multi-Parameter Filtering:} The sidebar provides dynamic filters for brand/make, body type, vehicle condition, transmission, exterior color, and an interactive MMR price range slider.
+    \item \textbf{Real-Time Card Rendering:} Vehicle cards display stock availability status badges (\texttt{Available}, \texttt{Pre-Order}), physical showroom branch locations (e.g., New York, Houston, Miami), odometer mileage, and pricing.
+    \item \textbf{Quick-Action Triggers:} Customers can toggle vehicles into their saved wishlist, add units to their cart, or initiate immediate checkout directly from catalog cards.
+\end{itemize}
+
+\clearpage
+\section{Vehicle Detail and Showroom Booking Interface}
+When prospective buyers select an individual vehicle from the catalog, they are directed to the detailed specification view shown in Figure~\ref{fig:ui_vehicle_detail}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{images/ui_vehicle_detail.png}
+\caption{Vehicle Specification, Direct Booking, and Showroom Inquiry Portal}
+\label{fig:ui_vehicle_detail}
+\end{figure}
+
+Figure~\ref{fig:ui_vehicle_detail} illustrates how the platform bridges online browsing with physical showroom visits:
+\begin{itemize}
+    \item \textbf{Vehicle Identity \& Valuation:} Displays vehicle specifications including trim level, VIN, assigned branch location, and the baseline Manheim Market Report (MMR) listing price.
+    \item \textbf{Transaction Action Hub:} Provides direct call-to-action buttons for \texttt{Buy Now Directly}, \texttt{Add to Cart}, and \texttt{Book Test Drive}.
+    \item \textbf{Showroom Inquiry Dispatcher:} Includes a direct message form that automatically routes customer inquiries to sales representatives assigned to that specific dealership branch.
+\end{itemize}
+
+\clearpage
+\section{Analytical Reporting: Store Sales Performance}
+To satisfy managerial reporting requirements without impacting transaction processing speeds, dedicated reporting pages were developed to query REST API endpoints. Figure~\ref{fig:ui_store_sales_report} displays the Store Sales Report interface populated with live analytical records.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{images/ui_store_sales_report.png}
+\caption{Star-Schema REST API Store Sales Reporting Interface (Live Data Query)}
+\label{fig:ui_store_sales_report}
+\end{figure}
+
+As shown in Figure~\ref{fig:ui_store_sales_report}, administrative personnel specify custom reporting date ranges to fetch analytical records asynchronously. The tabular view presents store-wise sales performance (e.g., New York Motors, Rio de Janeiro CarZone, Edinburgh Drive Center, Durban Wheels), customer names, vehicle specifications, transaction dates, MMR benchmarks, and realized selling prices, with support for in-table searching, column sorting, pagination, and direct PDF report generation.
+
+\clearpage
+\section{Performance Quota \& Budget Variance Tracking}
+Figure~\ref{fig:ui_budget_variance} illustrates the Budget vs.\ Sales Variance reporting module, which tracks sales representative target achievement across dealership locations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{images/ui_budget_variance.png}
+\caption{Employee Quota and Budget Target vs.\ Actual Sales Variance Report}
+\label{fig:ui_budget_variance}
+\end{figure}
+
+As shown in Figure~\ref{fig:ui_budget_variance}, the reporting engine dynamically evaluates individual sales quotas by comparing assigned budget targets against actual transaction receipts. For each employee, the module computes:
+\begin{itemize}
+    \item Assigned monthly budget targets against realized sales volumes.
+    \item Variance differences highlighting surplus or deficit performance.
+    \item Visual percentage achievement progress indicators, allowing store managers to quickly identify branch productivity trends.
+\end{itemize}
+
+\clearpage
+\section{Store CRM \& Customer Inquiry Management}
+Figure~\ref{fig:ui_crm_messages} illustrates the integrated dealership CRM communications center within the \texttt{car\_sales} ERP application.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{images/ui_crm_messages.png}
+\caption{Dealership CRM Inquiry Queue and Customer Messaging Center}
+\label{fig:ui_crm_messages}
+\end{figure}
+
+The CRM portal facilitates direct communication between prospective buyers and showroom staff:
+\begin{itemize}
+    \item \textbf{Unaccepted Inquiries Queue:} Displays incoming holding inquiries and questions submitted through the public vehicle detail pages, visible to all eligible branch staff.
+    \item \textbf{Accepted Chats Hub:} Allows sales representatives to claim inquiries and maintain persistent, real-time message threads with individual customers.
+    \item \textbf{In-Browser Search:} Enables staff to search through historical customer inquiry transcripts by buyer name or contact details.
+\end{itemize}
+
+\section{Security \& Role-Based Access Summary}
+To ensure organizational data security across the user tiers shown in the interfaces, access boundaries are enforced through Django's authentication and custom permission middlewares:
+\begin{itemize}
+    \item \textbf{Retail Customers:} Restricted to public catalog browsing, personal profile updates, and submitting checkout orders or inquiries.
+    \item \textbf{Sales Representatives (Level 9):} Scoped to branch inventory access, managing their assigned customer inquiries, and logging completed sales.
+    \item \textbf{Branch Managers (Levels 6 \& 8):} Authorized to review and approve customer holding orders, access store analytical reports, and assign test-drive hosts.
+    \item \textbf{Executive Administrators (Levels 1--4):} Granted global visibility across all 173 branches, employee budget allocations, and system configuration controls.
+\end{itemize}

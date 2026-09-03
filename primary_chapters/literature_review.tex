@@ -5,46 +5,28 @@
 The engineering challenges encountered during my internship at Radiant Pharmaceuticals Limited provided an empirical testing ground for theoretical concepts cultivated throughout my undergraduate curriculum at Independent University, Bangladesh (IUB). The system's architectural layers reflect specific coursework competencies:
 
 \begin{itemize}
-    \item \textbf{Database Systems (CSC303):} Implemented 3NF normalization across operational tables, structured dimensional star-schema fact and dimension tables, created composite B-tree indexes, and optimized complex multi-table SQL queries.
-    \item \textbf{Object-Oriented Programming (CSC203):} Applied modular class inheritance, encapsulation, and custom backend extensions in Python to structure Django models, controllers, and authentication handlers.
-    \item \textbf{Data Structures and Algorithms (CSC202):} Utilized hash-map lookups for constant-time ($O(1)$) employee supervisor tree traversals and indexed binary searching for high-speed vehicle filtering.
-    \item \textbf{Web Applications (CSC343):} Engineered RESTful JSON endpoints using Django REST Framework, implemented asynchronous AJAX DOM updates, and designed responsive layouts with Bootstrap 5.
-    \item \textbf{Operating Systems and Networking (CSC401):} Handled concurrent database transactions to prevent race conditions, configured Linux environments, and debugged HTTP request-response cycles.
-    \item \textbf{Software Engineering (CSC305):} Conducted formal requirement elicitation, derived Work Breakdown Structures (WBS), performed Critical Path Method (CPM) scheduling, and authored automated unit test suites.
+    \item \textbf{(CSC401) Database Management:} Implemented 3NF normalization across operational tables, structured dimensional star-schema fact and dimension tables, and optimized complex multi-table SQL queries.
+    \item \textbf{(CSC305) Object Oriented Programming:} Applied modular class inheritance, encapsulation, and custom backend extensions in Python to structure Django models, controllers, and authentication handlers.
+    \item \textbf{(CSC306) Algorithms:} Utilized hash-map lookups for constant-time ($O(1)$) employee supervisor tree traversals and indexed binary searching for high-speed vehicle filtering.
+    \item \textbf{(CSC455) Web Application \& Internet:} Engineered RESTful JSON endpoints using Django REST Framework, and designed responsive layouts with Bootstrap 5.
+    
+    \item \textbf{(CSC405) Systems Analysis \& Design:} Conducted formal requirement documents, derived Work Breakdown Structures (WBS), and authored automated unit test suites.
 \end{itemize}
 
 \section{Related Works}
 
-\subsection{Enterprise Web Frameworks and Architecture}
-Pressman and Maxim~\cite{pressman2014software} underline that scalable web engineering demands rigid separation of concerns between presentation, business rules, and persistent storage. Melé~\cite{django_by_example} demonstrates that Django's Model-View-Template (MVT) design pattern provides robust built-in defenses against cross-site scripting (XSS), cross-site request forgery (CSRF), and SQL injection vulnerabilities.
+\subsection{Web-Based E-Commerce Architecture and Tier Isolation}
+JunHua~\cite{junhua2011design} evaluates the design and implementation of Web-based e-commerce architectures, demonstrating that decoupling presentation rendering from backend database transactions provides structural resilience and high availability in multi-tier web environments. In this project, the separation between the public storefront and administrative back-office mirrors these tier-isolation principles within a unified Django framework.
 
-\subsection{Role-Based Access Control (RBAC) in Enterprise Systems}
-Sandhu et al.~\cite{sandhu1996role} established foundational models for Role-Based Access Control, proving that grouping permissions into hierarchical roles substantially reduces administrative complexity compared to user-level assignment. In this project, a 9-tier RBAC model extends Sandhu's principles to reflect real-world dealership chain-of-command hierarchies.
+\subsection{Full-Stack Automotive E-Commerce Development}
+Ullah et al.~\cite{ullah2016developing} examine the development of comprehensive database-driven e-commerce portals, emphasizing the integration of relational inventory tracking, customer account lifecycle management, and responsive product catalog presentation. The storefront implemented in this work builds upon their model by integrating dynamic multi-parameter vehicle search and direct showroom inquiry channels.
 
-\subsection{Relational Database Performance vs.\ ORM Overhead}
-Vicente et al.~\cite{vicente2021rdbms} evaluated RDBMS performance in web systems, noting that while ORMs accelerate routine CRUD workflows, they create severe memory and execution bottlenecks during complex multi-table aggregations due to excessive object hydration. Bypassing the ORM via raw SQL queries mitigates this latency, a finding directly validated in this report's analytical reporting layer.
+\subsection{Role-Based Access Control (RBAC) in Enterprise Hierarchies}
+Sandhu et al.~\cite{sandhu1996role} established foundational models for Role-Based Access Control, proving that grouping permissions into hierarchical roles substantially reduces administrative complexity compared to user-level assignment. In this project, a 9-tier RBAC model extends Sandhu's principles to reflect real-world dealership chain-of-command hierarchies and branch-scoped data governance.
 
-\subsection{Comparative Analysis with Existing Solutions}
-Table~\ref{tab:related_works_comparison} compares the proposed system with prominent commercial and open-source solutions.
+\subsection{Usability and Dynamic Catalog Navigation in Web Systems}
+Abdullah et al.~\cite{abdullah2021evaluating} evaluate content management usability across web applications, identifying that rigid, monolithic structures introduce navigation friction, whereas modular, asynchronous search filtering improves user engagement and catalog exploration efficiency. This informed the client-side AJAX filtering and specification comparison modules developed for the e-commerce storefront.
 
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-\textbf{Feature / Capability} & \textbf{DealerSocket} & \textbf{Odoo Auto} & \textbf{Generic CMS} & \textbf{Proposed System} \\
-\midrule
-9-Tier Hierarchical RBAC & Limited & Partial & No & \textbf{Yes (Custom 9-Level)} \\
-Direct SQL Star-Schema Analytics & No (ORM/ETL) & No (ORM) & No & \textbf{Yes ($<$20ms Latency)} \\
-Integrated B2C Showroom & Add-on & Separate Module & Yes & \textbf{Yes (Unified App)} \\
-4-Vehicle Spec Comparison & No & No & Plugin-dependent & \textbf{Yes (Native Matrix)} \\
-Direct Store Employee Messaging & SMS/CRM & Email only & Third-party & \textbf{Yes (Direct Inbox)} \\
-Zero-License Deployment Cost & No (High Cost) & Partial & Yes & \textbf{Yes (100\% Open Source)} \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Feature Comparison Matrix Between Existing Systems and Proposed Platform}
-\label{tab:related_works_comparison}
-\end{table}
+\subsection{Relational Database Performance and Direct Query Optimization}
+Vicente et al.~\cite{vicente2021rdbms} evaluated RDBMS performance in web systems, noting that while ORMs accelerate routine CRUD workflows, they create severe memory and execution bottlenecks during complex multi-table aggregations due to excessive object hydration. Bypassing the ORM via direct raw SQL queries with composite indexing mitigates this overhead, a finding directly applied in this report's analytical reporting layer.
+

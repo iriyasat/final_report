@@ -29,7 +29,7 @@ Figure~\ref{fig:rich_picture_as_is} illustrates the legacy operational structure
 
 \clearpage
 \subsubsection{To-Be Rich Picture (Proposed Integrated System)}
-Figure~\ref{fig:rich_picture_to_be} illustrates the proposed dual-application system. The architecture unifies back-office dealership management (\texttt{car\_sales}) and customer e-commerce (\texttt{ecommerce}) over a shared relational database. Automated order placement, direct store messaging inboxes, 9-tier RBAC security, and sub-20ms raw SQL reporting views eliminate paper waste and operational bottlenecks completely.
+Figure~\ref{fig:rich_picture_to_be} illustrates the proposed dual-application system. The architecture unifies back-office dealership management (\texttt{car\_sales}) and customer e-commerce (\texttt{ecommerce}) over a shared relational database. Automated order placement, direct store messaging inboxes, 9-tier RBAC security, and high-speed raw SQL reporting views eliminate paper waste and operational bottlenecks completely.
 
 \begin{figure}[H]
 \centering
@@ -123,7 +123,7 @@ The project had to be completed within the 13-week (65 working days) internship 
 
 \subsection{Effect and Constraints Analysis}
 \begin{itemize}
-    \item \textbf{Operational Effects:} Automating sale recording and invoice generation reduces transaction processing time by over 80\%, while direct customer messaging eliminates missed leads.
+    \item \textbf{Operational Effects:} Automating sale recording and invoice generation substantially reduces transaction processing time, while direct customer messaging eliminates missed leads.
     \item \textbf{Architectural Constraints:} Shared database schemas between \texttt{car\_sales} and \texttt{ecommerce} require strict ORM boundary management to prevent circular model dependencies.
     \item \textbf{Regulatory Constraints:} Customer PII (names, emails, phone numbers) is handled in compliance with standard data protection guidelines, ensuring privacy and restricted staff access.
 \end{itemize}
@@ -450,6 +450,7 @@ class Order(models.Model):
 To deliver executive reporting dashboards without performance degradation under large transaction volumes, the platform executes hand-written raw SQL queries directly through database cursors. Listing~\ref{lst:store_sales_sql} demonstrates the aggregation query used to compute store-wise revenue, transaction volume, and average sale prices.
 
 \begin{tcolorbox}[title=\textbf{Listing 5.8: High-Performance Raw SQL Store Aggregation Query}, colback=gray!4, colframe=indigo!70!black, arc=2pt, boxrule=0.6pt, left=6pt, right=6pt, top=4pt, bottom=4pt]
+\phantomsection\label{lst:store_sales_sql}
 \footnotesize
 \begin{verbatim}
 SELECT 
@@ -520,7 +521,7 @@ TC-10 & RBAC & Sales Rep opens Exec View & HTTP 403 Forbidden rejection & Pass \
 \end{table}
 
 \subsection{Test Results Summary}
-Automated unit and integration test suites executed via Django's test runner achieved a 100\% pass rate across 21 test routines, verifying model validation rules, custom numeric ID authentication, atomic holding reservations, permission boundaries, and API schemas.
+Automated unit and integration test suites executed via Django's test runner achieved complete pass execution across all 21 test routines, verifying model validation rules, custom numeric ID authentication, atomic holding reservations, permission boundaries, and API schemas.
 
 \begin{tcolorbox}[title=\textbf{Listing 5.9: Automated Test Suite Execution Output}, colback=black!5, colframe=black!60, arc=2pt, boxrule=0.6pt]
 \small

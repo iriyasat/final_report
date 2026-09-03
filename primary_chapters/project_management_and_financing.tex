@@ -316,34 +316,3 @@ DevOps / Environment Configuration & 4.80 & 7.4\% \\
 \end{table}
 
 As demonstrated by the resource breakdown, Backend and API development accounted for the primary share of effort (~44.6\%), reflecting the intensive server-side logic required across both the ERP and e-commerce applications. Rather than deferring testing until the end of the project, Quality Assurance (~20.0\%) was integrated continuously across all modules to detect schema regressions and permission defects early.
-
-\clearpage
-\section{Estimated Costing}
-To evaluate the financial feasibility of the engineering project, I conducted an estimated costing analysis covering human labor, hardware assets, software tools, and cloud infrastructure.
-
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{@{}llrrr@{}}
-\toprule
-\textbf{Category} & \textbf{Item Description} & \textbf{Rate / Unit} & \textbf{Units} & \textbf{Total (BDT)} \\
-\midrule
-\textbf{Human Labor} & Software Engineering Intern & 25,000 / month & 3 Months & 75,000 \\
-                     & Senior ICT Mentor / Supervisor & 20,000 / month & 3 Months (Part-time) & 60,000 \\
-\textbf{Hardware}    & Development Workstation (i7, 32GB) & 2,500 / month & 3 Months (Depreciation) & 7,500 \\
-                     & Staging Local Testing Machine & 1,500 / month & 3 Months & 4,500 \\
-\textbf{Software}    & JetBrains PyCharm / VS Code Tools & Free/Community & -- & 0 \\
-                     & Postman API Suite (Free Tier) & Free & -- & 0 \\
-                     & MySQL / MariaDB Open-Source DB & Free/GPL & -- & 0 \\
-\textbf{Infrastructure}& Cloud VPS Staging Server (Linux) & 1,500 / month & 3 Months & 4,500 \\
-                     & Domain Registration \& TLS/SSL & 1,800 / year & 1 Unit & 1,800 \\
-\midrule
-\textbf{Total}       & \textbf{Estimated Financial Budget} & & & \textbf{153,300 BDT} \\
-\bottomrule
-\end{tabular}
-\caption{Estimated Financial Costing and Resource Expenditure}
-\label{tab:estimated_costing}
-\end{table}
-
-By utilizing an open-source technology stack (Django, Python, MariaDB, and Bootstrap 5), commercial licensing expenses were eliminated, keeping the total development budget strictly within operational feasibility limits.

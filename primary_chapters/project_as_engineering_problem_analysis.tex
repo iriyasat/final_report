@@ -1,39 +1,37 @@
 \chapter{Project as Engineering Problem Analysis}
 
-\section{Sustainability of the Project/Work}
-Engineering sustainable enterprise software requires designing architectures that remain maintainable, scalable, and resource-efficient over long operational lifecycles. Sustainability is addressed across three primary dimensions:
+\section{Complex Engineering Problem Formulation}
+Engineering an enterprise automotive management platform constitutes a complex software engineering problem under criteria. The system must simultaneously reconcile conflicting operational and technical demands. On the transaction side, the architecture must maintain high-concurrency Online Transaction Processing to support real-time vehicle reservations, test-drive appointments, and cart checkouts. Concurrently, the platform must execute intensive Online Analytical Processing aggregations across high-volume sales records without degrading user interface responsiveness or locking transactional tables.
 
-\begin{enumerate}
-    \item \textbf{Technical Sustainability \& Modularity:} The software architecture separates back-office dealership operations (\texttt{car\_sales}) from customer-facing web commerce (\texttt{ecommerce}). By organizing functionality into independent Django applications with distinct models, views, and templates, future developers can introduce new features without modifying core legacy database logic. Furthermore, adopting standard ORM patterns and PEP-8 compliant code ensures long-term maintainability.
-    \item \textbf{Economic Sustainability:} Building the entire application stack using open-source, community-supported technologies (Python, Django, PostgreSQL, Bootstrap) eliminates recurring proprietary software license fees. The application can run on lightweight VPS hosting instances, minimizing operational server infrastructure costs.
-    \item \textbf{Environmental Sustainability:} Modernizing dealership management from physical paper-based ledgers to a fully digital platform drastically reduces paper, ink, and physical storage consumption.
-\end{enumerate}
+In addition to workload coexistence, the platform must enforce granular security scoping across a multi-tier organizational hierarchy comprising thousands of employees distributed across numerous physical branches. This requires dynamic permission evaluation so that branch personnel only access their localized store inventory and customer inquiries, while corporate executives retain global visibility across all regional outlets. Finally, strict transactional consistency must be preserved across application boundaries, ensuring that reservations initiated within the public e-commerce storefront atomically update back-office inventory and generate financial invoices without circular model dependencies or race conditions.
+
+\section{Sustainability of the Project Work}
+Engineering sustainable enterprise software requires designing architectures that remain maintainable, scalable, and resource-efficient across multi-year operational lifecycles. I addressed sustainability across technical, economic, and environmental dimensions.
+
+\subsection{Technical Sustainability}
+The software architecture enforces strict modular separation between back-office dealership operations (\texttt{car\_sales}) and the customer web storefront (\texttt{ecommerce}). By isolating core business logic into dedicated service handlers and utilizing standard Django ORM models alongside raw SQL cursor functions, future software engineers can introduce new business capabilities—such as maintenance scheduling or financing modules—without refactoring foundational database schemas. Furthermore, strict adherence to Python PEP-8 style guidelines, comprehensive docstrings, and modular template structures ensures that the codebase remains maintainable over extended lifecycles.
+
+\subsection{Economic Sustainability}
+Developing the complete software stack on open-source technologies, including Python 3.13, Django 6.0, MariaDB, and Bootstrap 5, entirely eliminates recurring proprietary vendor licensing fees. In addition, optimizing database query routines through star-schema composite indexing dramatically reduces server CPU utilization during heavy reporting operations.
+
+\subsection{Environmental Sustainability}
+The platform contributes to environmental sustainability through paperless showroom digitization and green algorithmic efficiency. Transitioning from physical paper sales ledgers, printed vehicle specification sheets, and manual inquiry notebooks to digital PDF invoices, interactive online catalogs, and in-browser messaging prevents significant paper waste over annual operational cycles. Furthermore, replacing computationally intensive multi-table ORM joins with indexed raw SQL star-schema queries reduces the database server's processing cycles, lowering electrical power dissipation under continuous analytical workloads.
 
 \section{Social and Environmental Effects and Analysis}
 
-\subsection{Societal Impact \& User Empowerment}
-The implementation of the dual-app automotive platform produces several positive social effects for both dealership staff and retail automotive customers:
-\begin{itemize}
-    \item \textbf{Transparency for Customers:} Customers gain instant, transparent access to vehicle specifications, inventory availability, pricing, and historical comparisons without needing to visit physical showrooms.
-    \item \textbf{Workplace Productivity:} Sales representatives and store managers benefit from streamlined workflows that eliminate repetitive manual documentation. Automated invoice calculation and message routing allow staff to focus on customer service rather than administrative overhead.
-    \item \textbf{Equitable Access:} Responsive web interfaces ensure that customers accessing the platform from low-cost mobile devices receive the same functional experience as desktop users.
-\end{itemize}
+\subsection{Market Transparency}
+The platform delivers measurable positive social outcomes for retail car buyers and dealership personnel. By publishing baseline Manheim Market Report (MMR) valuations directly alongside vehicle listing prices, prospective buyers are protected against arbitrary showroom markups through transparent price disclosures. For dealership staff, automating sales invoice generation, test-drive scheduling, and message dispatching eliminates repetitive clerical tasks, allowing sales representatives to focus on delivering high-quality customer assistance. Moreover, the responsive Bootstrap 5 interface ensures equitable digital access, enabling consumers on entry-level mobile devices to experience the same performance and functionality as desktop users.
 
-\subsection{Environmental Resource Reduction}
-By replacing physical paper invoices, printed vehicle brochures, and paper inquiry logs with digital PDF invoices, interactive online catalogs, and real-time messaging, the platform prevents substantial paper waste over annual operation cycles. Assuming a medium-sized dealership group processes 5,000 sales transactions and 25,000 customer inquiries annually, digitizing operations saves approximately 60,000 physical sheets of paper per year.
+\subsection{Health and Safety Considerations}
+The digital reservation and test-drive scheduling workflows allow prospective buyers to review vehicle histories, compare specifications, and complete preliminary appointment documentation remotely. This reduces physical congestion and wait times within dealership showrooms during peak retail seasons, contributing to a safer and more organized showroom environment.
 
-\section{Addressing Ethics and Ethical Issues}
+\section{Addressing Ethics, Privacy, and Standards}
 
-\subsection{Data Privacy \& Protection of Personal Information}
-Handling customer records, contact numbers, home addresses, and financial purchase histories introduces significant ethical responsibilities regarding data privacy. Strict data protection measures are enforced throughout the software architecture:
-\begin{itemize}
-    \item \textbf{Access Scoping:} Customer records are accessible only to authenticated store employees assigned to that specific store location. Unauthenticated public API endpoints strip out personal contact information, exposing only aggregate sales metrics.
-    \item \textbf{Password Security:} User authentication uses Django's implementation of PBKDF2 with a SHA-256 hash digest, ensuring that user passwords are never stored in plaintext format.
-\end{itemize}
+\subsection{Data Privacy }
+Handling customer records, contact numbers, residential addresses, and purchasing histories introduces strict ethical and legal privacy obligations. The platform safeguards personal data by dynamically scoping customer records to authorized branch personnel assigned to the relevant store, while public REST API endpoints automatically strip all personally identifiable information (PII). Furthermore, user authentication relies on Django's implementation of PBKDF2 with SHA-256 cryptographic hashing and unique salt values, ensuring that user credentials remain secure against unauthorized extraction.
 
-\subsection{Algorithmic Fairness \& Transparent Invoicing}
-Ethical software design requires preventing unauthorized manipulation of transaction records, prices, or discount figures. To enforce financial integrity:
-\begin{itemize}
-    \item \textbf{Immutable Sales Records:} Once a sale entry (\texttt{SellingInfo}) and invoice (\texttt{Invoice}) are finalized and saved, key financial fields (such as base price and vehicle VIN) are locked against retroactive tampering.
-    \item \textbf{Audit Trail Logging:} System timestamps (\texttt{created\_at}, \texttt{updated\_at}) are automatically managed by Django ORM fields (\texttt{auto\_now\_add}, \texttt{auto\_now}), providing immutable audit trails for auditing financial integrity.
-\end{itemize}
+\subsection{Transparent Invoicing}
+To uphold commercial ethics in automotive sales, once a vehicle sale record (\texttt{SellingInfo}) and invoice (\texttt{Invoice}) are finalized and saved, key financial attributes—including realized selling prices, applied promotional discounts, and vehicle identification numbers (VIN)—are locked against retroactive modification. System timestamps (\texttt{created\_at}, \texttt{updated\_at}) are automatically maintained by the database layer, establishing an immutable audit trail for internal compliance reviews and financial audits.
+
+\subsection{Adherence to Engineering Standards}
+The platform was constructed in strict compliance with international software engineering standards. Functional suitability, performance efficiency, and security were designed in accordance with ISO/IEC 25010 software product quality guidelines. Database transactions maintain complete Atomicity, Consistency, Isolation, and Durability (ACID) through Django's \texttt{transaction.atomic} decorator with row-level locking. Finally, all exposed web endpoints adhere to REST architectural constraints, ensuring stateless communication, standardized URI routing, and structured JSON response schemas.

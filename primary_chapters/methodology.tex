@@ -60,7 +60,7 @@ Designing the \texttt{ecommerce} application required balancing rich interaction
 
 \subsection{Catalog Filter and Search Engine}
 
-The vehicle catalog is built around the \texttt{VehicleInfo} schema, which captures make, model, trim, body style, transmission type, VIN, odometer reading, condition score, interior color, and MMR pricing. Rather than implementing a collaborative filtering recommendation engine---which Savadatti and Krishna~\cite{savadatti2024implementation} identified as introducing cold-start latency for new catalog items---the platform implements a zero-cold-start filter engine using indexed database queries. Customers interact with filter controls on the catalog page; a client-side JavaScript \texttt{fetch()} call assembles the selected parameters into a structured GET request to the \texttt{/api/vehicles/} endpoint, which queries the database and returns a JSON payload that updates the catalog grid without any page reload.
+The vehicle catalog is built around the \texttt{VehicleInfo} schema, which captures make, model, trim, body style, transmission type, VIN, odometer reading, condition score, interior color, and MMR pricing. Building upon the responsive catalog navigation frameworks examined by Ullah et al.~\cite{ullah2016developing}, the platform implements a high-speed, zero-cold-start filter engine using indexed database queries. Customers interact with filter controls on the catalog page; a client-side JavaScript \texttt{fetch()} call assembles the selected parameters into a structured GET request to the \texttt{/api/vehicles/} endpoint, which queries the database and returns a JSON payload that updates the catalog grid without any page reload.
 
 \subsection{Side-by-Side Vehicle Comparison}
 

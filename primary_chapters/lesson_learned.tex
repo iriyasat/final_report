@@ -1,41 +1,14 @@
 \chapter{Lesson Learned}
 
 \section{Problems Faced During this Period}
-Throughout the 3-month placement at Radiant Pharmaceuticals Limited, designing, developing, and deploying a dual-application automotive management system presented several significant engineering challenges:
+Designing, developing, and deploying an integrated automotive enterprise management platform during my internship at Radiant Pharmaceuticals Limited presented several significant software engineering challenges. The primary technical hurdle involved database aggregation bottlenecks within Django's default Object-Relational Mapping (ORM) layer. Because the star-schema analytical model required multi-table joins across sales facts, physical stores, vehicle specifications, customers, and employees, standard ORM querysets generated substantial Python object hydration overhead. This resulted in noticeable processing delays and heavy memory consumption during complex reporting routines.
 
-\begin{enumerate}
-    \item \textbf{Complex Relational Star-Schema Aggregation in Django ORM:}
-    Building multi-dimensional analytical dashboards (such as store sales breakdowns, budget vs.\ actual comparisons, and employee performance rankings) using standard Django ORM \texttt{annotate()} methods resulted in complex, inefficient SQL query generation. In several instances, ORM query building produced Cartesian join products across foreign keys, causing page load delays exceeding 1.5 seconds.
-
-    \item \textbf{Relational Integrity \& Cross-App Model Dependencies:}
-    Integrating two distinct functional applications (\texttt{car\_sales} ERP and \texttt{ecommerce} Storefront) within a shared database schema created risks of circular import dependencies and cascading data integrity errors. For instance, connecting e-commerce customer orders directly to ERP inventory models required careful lifecycle management so that online carts would not lock inventory prematurely.
-
-    \item \textbf{Concurrency \& Atomic Transaction Handling During Checkout:}
-    Simultaneous order submissions by online customers introduced potential race conditions where multiple buyers could attempt to purchase or reserve the last remaining vehicle stock item simultaneously.
-
-    \item \textbf{Managing Complex Multi-Level Employee Supervisor Hierarchies:}
-    Representing deep organizational trees (where sales representatives report through up to eight levels of supervisory management) in a relational structure made querying supervisor roles and chain-of-command permissions computationally intensive.
-
-    \item \textbf{Static \& Media Asset Delivery for High-Resolution Vehicle Media:}
-    Handling high-resolution vehicle photographs and brand logos across responsive vehicle detail pages caused initial layout shifting and slow initial page loads on slower networks.
-\end{enumerate}
+Furthermore, bridging the public e-commerce storefront with the internal dealership ERP engine introduced architectural coupling and transactional concurrency risks. Because physical vehicles represent unique single-unit inventory items, simultaneous reservation attempts by online buyers created potential race conditions where multiple customers could attempt to check out the same stock unit. Managing the corporate supervisory hierarchy also proved challenging, as navigating deep multi-tier reporting lines through recursive relational queries degraded permission verification speeds across dealership branches. Finally, handling high-resolution vehicle media and icon web fonts across differing deployment environments initially triggered browser security restrictions and layout shifts.
 
 \section{Solution of those Problems}
-To resolve these engineering obstacles and deliver a robust production-ready platform, the following targeted technical solutions were implemented:
+To resolve the database performance bottlenecks, I bypassed ORM model hydration by implementing optimized raw SQL aggregation queries executed directly through Django's database cursor interface. By utilizing hand-crafted multi-table joins and composite grouping clauses on indexed foreign keys, analytical query execution became near-instantaneous, allowing executive dashboards to render seamlessly without placing excessive load on the server.
 
-\begin{enumerate}
-    \item \textbf{Implementation of Raw SQL Star-Schema Views:}
-    To overcome ORM aggregation bottlenecks, optimized raw SQL queries were implemented inside custom Django model manager methods. By utilizing indexed \texttt{GROUP BY} and \texttt{LEFT JOIN} operations directly against PostgreSQL/SQLite tables, query execution latency dropped from 150.8 ms down to 12.0 ms, delivering instantaneous dashboard rendering.
+To eliminate race conditions and ensure data consistency, all critical checkout transitions—including vehicle status updates, holding order creations, and invoice generations—were encapsulated within atomic database transaction blocks using Django's \texttt{@transaction.atomic} decorator alongside row-level locking via \texttt{select\_for\_update()}. Architectural decoupling was maintained by routing inter-application business logic through dedicated service layers rather than direct model dependencies. In addition, supervisory hierarchy traversal was streamlined by introducing a flat hierarchy mapping model that stores direct references across management tiers, enabling constant-time permission checks. Asset delivery was stabilized by serving fonts and scripts through a same-origin static pipeline while applying responsive CSS wrappers and lazy-loading attributes to catalog media.
 
-    \item \textbf{Decoupled App Architecture \& Loose Coupling:}
-    Strict separation of concerns is enforced between \texttt{car\_sales} and \texttt{ecommerce}. E-commerce models (\texttt{Cart}, \texttt{Order}) reference ERP dimension tables (\texttt{Vehicle}, \texttt{Customer}) via foreign key constraints, while business logic operations (such as converting an online order into a finalized ERP invoice) are encapsulated in dedicated service functions.
-
-    \item \textbf{Atomic Database Transactions (\texttt{transaction.atomic}):}
-    To guarantee race-condition prevention during checkout and sale processing, inventory deduction, cart clearing, order creation, and invoice generation are wrapped inside Django's \texttt{transaction.atomic()} block. If any step fails, the entire transaction is rolled back, preserving database consistency.
-
-    \item \textbf{Structured Hierarchy Mapping Table:}
-    Instead of performing recursive SQL joins to determine employee chains of command, a dedicated \texttt{Employee}\allowbreak\texttt{Hierarchy} model was implemented storing direct foreign key links to supervisor roles (\texttt{supervisor}, \texttt{supervisor2}, \dots, \texttt{supervisor8}). This enabled constant-time $O(1)$ lookup for any employee's management chain.
-
-    \item \textbf{Asset Optimization \& Lazy Loading:}
-    Vehicle media delivery was optimized by compressing images into WebP/JPEG formats, implementing responsive CSS image containers, and applying native browser \texttt{loading="lazy"} attributes to non-critical catalog images, reducing total payload sizes by over 60\%.
-\end{enumerate}
+\section{Professional and Corporate Lessons Learned}
+Beyond technical problem solving, working within the Management Information Systems (MIS) department at Radiant Pharmaceuticals Limited provided vital insights into enterprise software practices. I learned how corporate IT divisions prioritize data consistency, auditability, and clear reporting interfaces to support strategic executive decisions. The experience reinforced the necessity of profiling and empirical verification rather than relying on theoretical design assumptions. Collaborating closely with industry supervisor Ayan Chowdhury and academic supervisor Azwad Abid taught me how to align iterative development milestones with both business requirements and academic engineering standards.

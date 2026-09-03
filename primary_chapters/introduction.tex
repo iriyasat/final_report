@@ -1,6 +1,6 @@
 \chapter{Introduction}
 
-\section{Overview / Background of the Work}
+\section{Overview}
 Automotive retail networks operating across distributed regional outlets face persistent bottlenecks when synchronizing physical showroom inventory with digital sales channels. Traditionally, dealerships have depended on disparate desktop applications, offline spreadsheet records, or isolated point-of-sale registers. This fragmentation yields severe operational friction: stock availability discrepancies, slow inquiry turnaround times between prospective buyers and branch representatives, and delayed financial reporting caused by unindexed data sources.
 
 During my 3-month placement within the ICT Wing (MIS Department) at \textbf{Radiant Pharmaceuticals Limited} from May 17, 2026, to August 17, 2026, under the joint supervision of Mr.~Ayan Chowdhury (Senior Officer, ICT) and Mr.~Azwad Abid (Lecturer, CSE Department, IUB), I engineered a centralized web platform to overcome these operational inefficiencies. Within Radiant's MIS division, prototypes of supply chain tracking, role hierarchies, and transaction engines are routinely evaluated. This project served as an advanced capstone to model high-throughput enterprise resource planning (ERP) alongside customer-facing web commerce.
@@ -8,15 +8,14 @@ During my 3-month placement within the ICT Wing (MIS Department) at \textbf{Radi
 The resulting software consolidates dealership back-office management (\texttt{car\_sales}) and a consumer-facing digital showroom (\texttt{ecommerce}) within a unified, high-performance Django web framework instance.
 
 \section{Objectives}
-The overarching goal was to construct a robust, full-stack automotive platform connecting internal dealership governance with customer purchasing pipelines and sub-20ms executive analytics. Key engineering targets included:
-\begin{enumerate}
-    \item \textbf{Implement Fine-Grained Authorization:} Construct a 9-tier RBAC permission model that isolates administrative capabilities, branch inventory edits, and sensitive executive revenue views across distinct personnel ranks.
-    \item \textbf{Develop Numeric Employee Authentication:} Create a custom authentication backend (\texttt{EmployeeBackend}) enabling dealership staff to sign in using their unique numeric staff codes while resolving role privileges dynamically.
-    \item \textbf{Optimize Analytical Reporting via Direct SQL:} Construct a star-schema querying layer that executes parameterized raw SQL statements, avoiding ORM memory bloat and delivering sales summaries in under 20~milliseconds.
-    \item \textbf{Deliver an Interactive Online Storefront:} Build dynamic catalog search filters, 4-vehicle side-by-side spec comparison, wishlist toggling, and customer inquiry messaging inboxes.
-    \item \textbf{Enforce Transactional Consistency:} Safeguard holding reservations and vehicle sale invoicing via atomic database transactions (\texttt{transaction.atomic}) to eliminate concurrency race conditions.
-    \item \textbf{Establish Empirical Reliability:} Expose clean REST API routes and demonstrate system correctness through a 21-case automated test suite.
-\end{enumerate}
+The overarching goal of this project was to engineer a robust, full-stack automotive management platform that bridges internal dealership governance with an interactive retail e-commerce portal and high-speed executive analytics. To achieve this, the system was designed around several key engineering targets across access control, authentication, database performance, user experience, transactional integrity, and software quality.
+
+First, the platform aimed to establish fine-grained authorization by implementing a nine-tier role-based access control (RBAC) permission model that strictly isolates administrative capabilities, localized branch inventory management, and sensitive executive revenue views across organizational ranks. To support this governance model seamlessly, a custom authentication backend (\texttt{EmployeeBackend}) was developed to allow dealership personnel to sign in using their unique numeric employee IDs while resolving role privileges and store assignments dynamically at login.
+
+Second, the system sought to deliver high-performance analytical reporting by implementing a star-schema querying layer that executes parameterized raw SQL statements directly through database cursors. This approach was designed to eliminate the memory overhead and hydration delays associated with standard ORM queries, thereby rendering multi-table store sales summaries and budget variances with near-instantaneous execution speeds.
+
+On the customer-facing side, the objective was to provide an engaging digital storefront featuring dynamic multi-parameter catalog filtering, a side-by-side specification comparison tool for up to four vehicles, personal wishlist management, and direct customer-to-store messaging channels. To guarantee transactional consistency across both web applications, all inventory reservations, holding orders, and automated sales invoicing workflows were engineered within atomic database transaction blocks to eliminate concurrency race conditions. Finally, the platform aimed to establish empirical reliability by exposing structured RESTful API endpoints and validating functional correctness through a comprehensive automated test suite.
+
 
 % \section{Scopes}
 
